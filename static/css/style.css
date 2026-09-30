@@ -1,0 +1,706 @@
+/* figade styles, shared by every page.
+
+   COLOURS
+   The first :root block is the light theme. The block under it is the dark theme,
+   which browsers use when the visitor's device is set to dark mode.
+   To change a colour, change it in both blocks.
+
+     --bg       page background           --surface  the tool box, tables, buttons
+     --subtle   inputs, table headings    --border   thin lines around things
+     --text     normal text               --muted    quieter text
+     --accent   the main button and the   --link     links
+                selected size
+
+   FONTS
+   Headings use Figade Serif (a trimmed copy of Source Serif 4, in /fonts).
+   Everything else uses the device's own font, so it loads instantly.
+
+   SPACING
+   Spacing sticks to steps of 4px: 4, 8, 12, 16, 24, 32, 48, 64.
+*/
+
+@font-face {
+  font-family: "Figade Serif";
+  src: url("/fonts/figade-serif-600.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  /* If the font is not there almost at once, keep the fallback rather than swapping mid-read. */
+  font-display: optional;
+}
+
+:root {
+  --bg: #faf9f6;
+  --surface: #ffffff;
+  --subtle: #f3f1ec;
+  --border: #e4e0d8;
+  --border-strong: #cbc5ba;
+  --text: #1f1e1c;
+  --muted: #6b665e;
+  --accent: #b5532e;
+  --accent-hover: #9e4726;
+  --on-accent: #ffffff;
+  --link: #a64b29;
+  --ok: #2e6b3f;
+  --err: #b42318;
+  --warn: #8a5a12;
+
+  --serif: "Figade Serif", Georgia, "Times New Roman", serif;
+  --sans: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --radius-sm: 6px;
+  --radius: 10px;
+  --width: 44rem;
+  --gutter: 20px;
+  color-scheme: light;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #1f1e1c;
+    --surface: #282724;
+    --subtle: #2e2c29;
+    --border: #3a3834;
+    --border-strong: #55524c;
+    --text: #edebe6;
+    --muted: #a39e95;
+    --accent: #e07a55;
+    --accent-hover: #eb8c69;
+    --on-accent: #1f1e1c;
+    --link: #e8906e;
+    --ok: #7fc79b;
+    --err: #f08a80;
+    --warn: #d8b070;
+    color-scheme: dark;
+  }
+}
+
+/* ---------- Page ---------- */
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: clamp(1rem, 0.96rem + 0.2vw, 1.0625rem);
+  line-height: 1.6;
+  -webkit-text-size-adjust: 100%;
+}
+
+.wrap {
+  max-width: var(--width);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+main {
+  padding-top: 40px;
+  padding-bottom: 64px;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 25%, transparent);
+}
+
+/* ---------- Text ---------- */
+
+h1,
+h2,
+.brand,
+.limit b {
+  font-family: var(--serif);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+h1 {
+  font-size: clamp(1.875rem, 1.5rem + 1.6vw, 2.5rem);
+  line-height: 1.15;
+  margin: 0 0 12px;
+  text-wrap: balance;
+}
+
+h2 {
+  font-size: 1.3125rem;
+  line-height: 1.3;
+  margin: 48px 0 12px;
+}
+
+p {
+  margin: 0 0 16px;
+}
+
+.s {
+  color: var(--muted);
+}
+
+h1 + .s {
+  font-size: 1.0625rem;
+  margin-bottom: 24px;
+}
+
+a {
+  color: var(--link);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration-thickness: 2px;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+ul {
+  padding-left: 20px;
+  margin: 0 0 16px;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+li::marker {
+  color: var(--muted);
+}
+
+/* ---------- Header and menu ---------- */
+
+.top {
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+nav {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  min-height: 60px;
+}
+
+nav .brand {
+  font-size: 1.3125rem;
+  color: var(--text);
+  text-decoration: none;
+  margin-right: auto;
+}
+
+nav a.l {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9375rem;
+  padding: 8px 0;
+}
+
+nav a.l:hover,
+nav a.l[aria-current="page"] {
+  color: var(--text);
+}
+
+/* ---------- The limit for a page (e.g. 20 MB for Discord) ---------- */
+
+.limit {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 24px 0;
+  padding: 12px 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+.limit b {
+  font-size: 1.75rem;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.limit span {
+  color: var(--muted);
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  padding-left: 16px;
+  border-left: 1px solid var(--border);
+}
+
+/* ---------- The compressor box ---------- */
+
+.tool {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  margin: 24px 0 40px;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.9375rem;
+  margin: 0 0 8px;
+}
+
+.hint {
+  font-weight: 400;
+  color: var(--muted);
+}
+
+@media (hover: none) {
+  .hint {
+    display: none;
+  }
+}
+
+/* the file picker, drawn as a drop area */
+input[type="file"] {
+  display: block;
+  width: 100%;
+  margin-bottom: 24px;
+  padding: 20px 16px;
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-sm);
+  background: var(--subtle);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.9375rem;
+  cursor: pointer;
+}
+
+input[type="file"]:hover {
+  border-color: var(--accent);
+}
+
+input[type="file"]::file-selector-button {
+  margin-right: 12px;
+  padding: 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* the size buttons: equal widths, sharing the row */
+.row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(4.75rem, 1fr));
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.chip {
+  min-height: 44px;
+  padding: 0 8px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+}
+
+.chip:hover {
+  border-color: var(--border-strong);
+}
+
+.chip.on {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--surface));
+  font-weight: 600;
+}
+
+/* the exact size, with MB after it */
+.num {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.num input {
+  width: 7rem;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font: inherit;
+  font-variant-numeric: tabular-nums;
+}
+
+.num input:hover {
+  border-color: var(--border-strong);
+}
+
+.num span {
+  color: var(--muted);
+  font-size: 0.9375rem;
+}
+
+#est {
+  margin: 0 0 16px;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
+#est:empty {
+  display: none;
+}
+
+#est.warn {
+  color: var(--warn);
+}
+
+#go {
+  display: block;
+  width: 100%;
+  min-height: 48px;
+  border: 0;
+  border-radius: var(--radius-sm);
+  background: var(--accent);
+  color: var(--on-accent);
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+#go:hover {
+  background: var(--accent-hover);
+}
+
+#go:disabled {
+  opacity: 0.55;
+  cursor: default;
+  background: var(--accent);
+}
+
+/* progress and status */
+#bar {
+  display: none;
+  height: 4px;
+  margin: 12px 0 0;
+  border-radius: 2px;
+  background: var(--subtle);
+  overflow: hidden;
+}
+
+#bar i {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--accent);
+}
+
+#st {
+  margin: 12px 0 0;
+  font-size: 0.9375rem;
+}
+
+#st:empty {
+  margin: 0;
+}
+
+#st.err {
+  color: var(--err);
+}
+
+#st.ok {
+  color: var(--ok);
+  font-weight: 600;
+}
+
+video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+  margin-top: 16px;
+  border-radius: var(--radius-sm);
+  background: #000;
+}
+
+.acts {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+a.dl,
+.share {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0 12px;
+  border: 1px solid;
+  border-radius: var(--radius-sm);
+  font: inherit;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+a.dl {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--on-accent);
+}
+
+a.dl:hover {
+  background: var(--accent-hover);
+  border-color: var(--accent-hover);
+}
+
+.share {
+  background: var(--surface);
+  border-color: var(--border);
+  color: var(--text);
+}
+
+.share:hover {
+  border-color: var(--border-strong);
+}
+
+details {
+  margin-top: 20px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+summary {
+  cursor: pointer;
+  width: fit-content;
+}
+
+pre {
+  margin: 8px 0 0;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  background: var(--subtle);
+  font-family: var(--mono);
+  font-size: 0.8125rem;
+  white-space: pre-wrap;
+  overflow-x: auto;
+}
+
+/* ---------- Other sizes ---------- */
+
+.more-h {
+  margin: 0 0 12px;
+  font-weight: 600;
+  font-size: 0.9375rem;
+}
+
+.more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 0;
+}
+
+.more a,
+.more span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.9375rem;
+  text-decoration: none;
+}
+
+.more a:hover {
+  border-color: var(--border-strong);
+}
+
+/* the page you are on */
+.more span {
+  background: var(--subtle);
+  color: var(--muted);
+}
+
+/* ---------- Questions ---------- */
+
+dl {
+  margin: 0;
+}
+
+dt {
+  font-weight: 600;
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border);
+}
+
+dt:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+dd {
+  margin: 4px 0 0;
+}
+
+/* ---------- Plain pages ---------- */
+
+.text h2 {
+  margin-top: 40px;
+}
+
+.text ul {
+  margin-bottom: 20px;
+}
+
+/* ---------- Tables ---------- */
+
+.tw {
+  overflow-x: auto;
+  margin: 24px 0;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+}
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.9375rem;
+  font-variant-numeric: tabular-nums;
+}
+
+caption {
+  padding: 12px 16px;
+  text-align: left;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+th,
+td {
+  padding: 10px 16px;
+  text-align: left;
+  white-space: nowrap;
+  border-top: 1px solid var(--border);
+}
+
+thead th {
+  background: var(--subtle);
+  font-weight: 600;
+}
+
+tbody th {
+  font-weight: 600;
+}
+
+/* keep the size column in view when the table scrolls sideways */
+tbody th,
+thead th:first-child {
+  position: sticky;
+  left: 0;
+}
+
+tbody th {
+  background: var(--surface);
+}
+
+/* ---------- Ads ---------- */
+
+.ad {
+  margin: 24px 0;
+  min-height: 100px;
+}
+
+/* ---------- Footer ---------- */
+
+footer {
+  border-top: 1px solid var(--border);
+  padding: 24px 0 48px;
+  color: var(--muted);
+  font-size: 0.875rem;
+}
+
+footer p {
+  margin: 0 0 8px;
+}
+
+.fl {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 20px;
+}
+
+.fl a {
+  color: var(--muted);
+  text-decoration: none;
+}
+
+.fl a:hover {
+  color: var(--text);
+  text-decoration: underline;
+}
+
+/* ---------- Drag and drop ---------- */
+
+body.drag .tool {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 1px var(--accent);
+}
+
+body.drag::after {
+  content: "Drop the video to load it";
+  position: fixed;
+  inset: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px dashed var(--accent);
+  border-radius: var(--radius);
+  background: color-mix(in srgb, var(--bg) 92%, transparent);
+  color: var(--text);
+  font-size: 1.25rem;
+  font-weight: 600;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 480px) {
+  :root {
+    --gutter: 16px;
+  }
+
+  main {
+    padding-top: 28px;
+  }
+
+  .tool {
+    padding: 16px;
+  }
+
+  nav {
+    gap: 16px;
+  }
+}

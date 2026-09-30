@@ -1,0 +1,18 @@
+# How long browsers may keep files before checking for a new copy. Read by Cloudflare Pages.
+# CSS and JS are kept for an hour, then refreshed in the background, so a deploy shows up quickly.
+
+/css/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/js/*
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
+
+/js/mediabunny.mjs
+  ! Cache-Control
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+/img/*
+  Cache-Control: public, max-age=604800
+
+/favicon.ico
+  Cache-Control: public, max-age=604800

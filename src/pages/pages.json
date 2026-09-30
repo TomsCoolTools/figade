@@ -1,0 +1,5 @@
+{
+  "layout": "text.njk",
+  "permalink": "{{ page.fileSlug }}.html",
+  "date": "git Last Modified"
+}

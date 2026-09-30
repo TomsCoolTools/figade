@@ -1,0 +1,10 @@
+[
+  { "key": "discord",  "url": "/compress-video-for-discord",  "label": "For Discord" },
+  { "key": "whatsapp", "url": "/compress-video-for-whatsapp", "label": "For WhatsApp" },
+  { "key": "email",    "url": "/compress-video-for-email",    "label": "For email" },
+  { "key": "8mb",      "url": "/compress-video-to-8mb",       "label": "To 8MB" },
+  { "key": "10mb",     "url": "/compress-video-to-10mb",      "label": "To 10MB" },
+  { "key": "25mb",     "url": "/compress-video-to-25mb",      "label": "To 25MB" },
+  { "key": "50mb",     "url": "/compress-video-to-50mb",      "label": "To 50MB" },
+  { "key": "100mb",    "url": "/compress-video-to-100mb",     "label": "To 100MB" }
+]

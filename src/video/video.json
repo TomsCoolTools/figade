@@ -1,0 +1,7 @@
+{
+  "layout": "tool.njk",
+  "permalink": "{{ page.fileSlug }}.html",
+  "tags": "video",
+  "fitsTable": true,
+  "date": "git Last Modified"
+}

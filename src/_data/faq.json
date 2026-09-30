@@ -1,0 +1,18 @@
+[
+  {
+    "q": "Is my video uploaded?",
+    "a": "No. It is processed on your device and never sent to a server."
+  },
+  {
+    "q": "How long does it take?",
+    "a": "Usually only seconds. There is no upload or download wait because your device does the work, and most phones and computers have video encoding built in. A long clip on an older phone can take longer."
+  },
+  {
+    "q": "Why did my video come out at a lower resolution?",
+    "a": "A small file has room for only so much detail. Rather than a blocky 1080p video, the tool scales it down so it looks clean. Pick a bigger size or trim the clip to keep more resolution."
+  },
+  {
+    "q": "It says my browser cannot do it.",
+    "a": "Use a current Chrome, Edge or Safari. Not every browser can read every video format."
+  }
+]

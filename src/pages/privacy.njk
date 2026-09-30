@@ -1,0 +1,21 @@
+---
+title: "Privacy"
+description: "How figade handles your videos, cookies and ads. Videos are processed on your device and never uploaded."
+h1: "Privacy"
+---
+<p class="s">Last updated {{ site.privacyUpdated }}</p>
+  <h2>Your videos</h2>
+  <p>Your videos are processed in your browser on your own device. They are not uploaded to this site or to any server. The video encoder is loaded from this site. If that fails, it is loaded from a public code host (jsDelivr) instead, which can see that your browser requested that file.</p>
+  <h2>Advertising</h2>
+  <p>This site may show ads from Google AdSense. Third party vendors, including Google, use cookies to serve ads based on your previous visits to this site or other websites. Google's use of advertising cookies lets it and its partners serve ads based on your visits to this site and other sites on the internet.</p>
+  <p>You can turn off personalised ads in <a href="https://www.google.com/settings/ads" rel="nofollow">Google's Ads Settings</a>. You can also opt out of some other vendors' use of cookies for personalised ads at <a href="https://www.aboutads.info/choices/" rel="nofollow">aboutads.info</a>. To see how Google uses information from sites that show its ads, read <a href="https://policies.google.com/technologies/partner-sites" rel="nofollow">How Google uses information from sites or apps that use our services</a>.</p>
+  <p>Visitors in the European Economic Area, the UK and Switzerland are asked for consent before personalised ads are shown.</p>
+  <h2>Analytics</h2>
+  {%- if site.goatcounter %}
+  <p>Visits are counted with <a href="https://www.goatcounter.com/">GoatCounter</a>, which does not use cookies and does not collect personal data. It records which page was visited, the site you came from, and your browser, screen size and country.</p>
+  <p>The compressor also counts whether each compression worked or failed, so problems can be found and fixed. Nothing about the video itself, such as its name or content, is sent.</p>
+  {%- else %}
+  <p>The site may use basic analytics to count visits and see which pages are used. This page will name the provider if one is added.</p>
+  {%- endif %}
+  <h2>Contact</h2>
+  <p>Questions about privacy: <a href="mailto:hello@figade.com">hello@figade.com</a></p>

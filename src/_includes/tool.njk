@@ -1,0 +1,44 @@
+---
+layout: base.njk
+scripts: ["/js/app.js"]
+---
+{# tool.njk — Layout for any page with the compressor on it.
+  A page using this supplies only its own words in the front matter. #}
+<h1>{{ h1 }}</h1>
+<p class="s">{{ intro | safe }}</p>
+{%- if limit %}
+<div class="limit"><b>{{ limit.big }}</b><span>{{ limit.caption }}{% if limit.checked %}, checked {{ site.checked }}{% endif %}</span></div>
+{%- endif %}
+{% include "partials/compressor.njk" %}
+{% include "partials/sizelinks.njk" %}
+{{ content | safe }}
+{%- if fitsTable %}
+<h2>How long a video fits in {{ target }}MB</h2>
+<div class="tw">
+  <table>
+    <caption>Longest 16:9 clip that stays at each resolution. More sizes in the <a href="/video-size-guide">size guide</a>.</caption>
+    <thead><tr><th scope="col">Resolution</th><th scope="col">Up to</th></tr></thead>
+    <tbody>
+      {%- for f in target | fits %}
+      <tr><th scope="row">{{ f.res }}</th><td>{{ f.time }}</td></tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+{%- endif %}
+{%- if facts %}
+<h2>What to know</h2>
+<ul>
+  {%- for f in facts %}
+  <li>{{ f | safe }}</li>
+  {%- endfor %}
+</ul>
+{%- endif %}
+<h2>Questions</h2>
+<dl>
+  {%- for item in faq %}
+  <dt>{{ item.q }}</dt>
+  <dd>{{ item.a }}</dd>
+  {%- endfor %}
+</dl>
+<script type="application/ld+json">{{ { page: page, site: site, h1: h1, description: description, faq: faq } | toolSchema | safe }}</script>
