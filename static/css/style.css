@@ -509,6 +509,13 @@ pre {
   overflow-x: auto;
 }
 
+/* the line under a tool pointing to the other tool */
+.also {
+  margin: -24px 0 32px;
+  font-size: 0.9375rem;
+  color: var(--muted);
+}
+
 /* ---------- Other sizes ---------- */
 
 .more-h {

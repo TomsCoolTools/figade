@@ -10,6 +10,7 @@ scripts: ["/js/image.js"]
 <div class="limit"><b>{{ limit.big }}</b><span>{{ limit.caption }}</span></div>
 {%- endif %}
 {% include "partials/imagetool.njk" %}
+<p class="also">Need to shrink a video instead? <a href="/">Compress a video&nbsp;→</a></p>
 {%- set sizes = imageSizes %}
 {% include "partials/sizelinks.njk" %}
 {{ content | safe }}
