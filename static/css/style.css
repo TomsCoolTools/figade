@@ -180,8 +180,9 @@ li::marker {
 
 nav {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 20px;
+  gap: 0 20px;
   min-height: 60px;
 }
 
@@ -717,6 +718,10 @@ body.drag::after {
   }
 
   nav {
-    gap: 16px;
+    gap: 0 14px;
+  }
+
+  nav a.l {
+    font-size: 0.875rem;
   }
 }

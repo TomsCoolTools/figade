@@ -1,0 +1,6 @@
+{
+  "layout": "convert.njk",
+  "permalink": "{{ page.fileSlug }}.html",
+  "tags": "convert",
+  "date": "git Last Modified"
+}
