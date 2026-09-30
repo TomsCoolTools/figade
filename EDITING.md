@@ -52,7 +52,9 @@ finished pages.
 | Domain, contact address, "limits checked" date | `src/_data/site.json` |
 | Turning visit counting on (your GoatCounter code) | `goatcounter` in `src/_data/site.json` |
 | Colours and layout | `static/css/style.css` |
-| The compressor itself | `static/js/app.js` |
+| The video compressor itself | `static/js/app.js` |
+| The image compressor itself | `static/js/image.js` |
+| Image pages, their "Other sizes" buttons and questions | `src/image/`, `src/_data/imageSizes.json`, `src/_data/imageFaq.json` |
 | The video encoder version | `mediabunny` in `package.json` (see Notes) |
 | Anything in the head, or the footer wording | `src/_includes/` |
 

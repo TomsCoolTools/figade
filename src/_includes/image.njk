@@ -1,0 +1,34 @@
+---
+layout: base.njk
+scripts: ["/js/image.js"]
+---
+{# image.njk — Layout for pages with the image compressor. Pages supply their words in the front matter.
+  Facts and questions shared by every image page live here and in src/_data/imageFaq.json. #}
+<h1>{{ h1 }}</h1>
+<p class="s">{{ intro | safe }}</p>
+{%- if limit %}
+<div class="limit"><b>{{ limit.big }}</b><span>{{ limit.caption }}</span></div>
+{%- endif %}
+{% include "partials/imagetool.njk" %}
+{%- set sizes = imageSizes %}
+{% include "partials/sizelinks.njk" %}
+{{ content | safe }}
+<h2>What to know</h2>
+<ul>
+  {%- for f in facts %}
+  <li>{{ f | safe }}</li>
+  {%- endfor %}
+  <li>The result is a JPG, which almost every form and website accepts. Transparent areas become white.</li>
+  <li>It lowers the JPG quality first, and only makes the image smaller in pixels if that is not enough.</li>
+  <li>It counts 1KB as 1000 bytes, so the result fits whichever way a site measures KB.</li>
+  <li>Location and camera details saved in the photo are left out of the result.</li>
+  <li>This sets the file size only. If a form also asks for exact pixel dimensions, check them before you upload.</li>
+</ul>
+<h2>Questions</h2>
+<dl>
+  {%- for item in imageFaq %}
+  <dt>{{ item.q }}</dt>
+  <dd>{{ item.a }}</dd>
+  {%- endfor %}
+</dl>
+<script type="application/ld+json">{{ { page: page, site: site, h1: h1, description: description, faq: imageFaq } | toolSchema | safe }}</script>

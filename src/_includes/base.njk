@@ -50,7 +50,7 @@
     </main>
     {% include "partials/footer.njk" %}
     {%- if site.goatcounter %}
-    <script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+    <script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
     {%- endif %}
     {%- if scripts %}
     {% for s in scripts %}<script src="{{ s | v }}"></script>
