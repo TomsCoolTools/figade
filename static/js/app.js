@@ -50,9 +50,14 @@ const startBps=(i,target)=>target*8*0.94/i.dur-audioBps(i,target);
 async function inspect(f){
   const M=await lib();
   const inp=new M.Input({source:new M.BlobSource(f),formats:M.ALL_FORMATS});
-  const vt=await inp.getPrimaryVideoTrack();
+  let vt;
+  try{vt=await inp.getPrimaryVideoTrack()}
+  catch(e){if(e&&e.name==='UnsupportedInputFormatError') throw new Error('This file cannot be read. Use a normal video file such as MP4, MOV, WebM or MKV.');throw e}
   if(!vt) throw new Error('No video track found in this file.');
-  if(!(await vt.canDecode())) throw new Error('This browser cannot read this video format.');
+  if(!(await vt.canDecode())){
+    const names={avc:'H.264',hevc:'HEVC (H.265)',vp8:'VP8',vp9:'VP9',av1:'AV1'};
+    throw new Error(`This browser cannot read ${names[vt.codec]||'this'} video. Try another browser, such as Safari or Edge.`);
+  }
   const dur=await inp.computeDuration(),at=await inp.getPrimaryAudioTrack();
   let fps=30;
   try{if(typeof vt.computePacketStats==='function'){const st=await vt.computePacketStats(150);if(st&&st.averagePacketRate>1&&st.averagePacketRate<250) fps=st.averagePacketRate}}catch(e){}
