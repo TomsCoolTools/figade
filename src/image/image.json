@@ -1,0 +1,6 @@
+{
+  "layout": "image.njk",
+  "permalink": "{{ page.fileSlug }}.html",
+  "tags": "image",
+  "date": "git Last Modified"
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "q": "Is my image uploaded?",
+    "a": "No. It is processed on your device and never sent to a server."
+  },
+  {
+    "q": "Why is the result smaller in pixels?",
+    "a": "A small file has room for only so much detail. When lowering the quality is not enough, the image is scaled down so it stays clear instead of turning blocky."
+  },
+  {
+    "q": "It says it cannot open my photo.",
+    "a": "Some browsers cannot open HEIC photos from iPhones. Safari on a Mac can. On the iPhone, Settings, Camera, Formats, Most Compatible makes the camera save JPG photos instead."
+  },
+  {
+    "q": "Why a JPG?",
+    "a": "Forms and websites accept it almost everywhere, and it makes the smallest files for photos."
+  }
+]

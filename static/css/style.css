@@ -433,6 +433,15 @@ video {
   background: #000;
 }
 
+#out img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin-top: 16px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+}
+
 .acts {
   display: flex;
   gap: 8px;
@@ -669,7 +678,7 @@ body.drag .tool {
 }
 
 body.drag::after {
-  content: "Drop the video to load it";
+  content: "Drop it here to load it";
   position: fixed;
   inset: 12px;
   display: flex;

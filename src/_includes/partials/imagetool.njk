@@ -1,0 +1,20 @@
+{# The image compressor box. Do not rename the ids — js/image.js needs them. #}
+<div class="tool">
+  <label for="file">Image <span class="hint">or drop one anywhere on this page</span></label>
+  <input id="file" type="file" accept="image/*,.heic,.heif">
+  <label for="kb">Target size</label>
+  <div class="row">
+    {%- for kb in chips %}
+    <button class="chip{% if kb == target %} on{% endif %}" data-kb="{{ kb }}">{{ kb }}KB</button>
+    {%- endfor %}
+  </div>
+  <div class="num"><input id="kb" type="number" min="5" step="1" value="{{ target }}"><span>KB</span></div>
+  <p id="est" aria-live="polite"></p>
+  <button id="go">Compress</button>
+  <p id="st" aria-live="polite"></p>
+  <div id="out"></div>
+  <details>
+    <summary>Details</summary>
+    <pre id="log">Nothing yet.</pre>
+  </details>
+</div>

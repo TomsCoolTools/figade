@@ -1,0 +1,7 @@
+[
+  { "key": "image", "url": "/compress-image",        "label": "Any size" },
+  { "key": "20kb",  "url": "/compress-image-to-20kb",  "label": "To 20KB" },
+  { "key": "50kb",  "url": "/compress-image-to-50kb",  "label": "To 50KB" },
+  { "key": "100kb", "url": "/compress-image-to-100kb", "label": "To 100KB" },
+  { "key": "200kb", "url": "/compress-image-to-200kb", "label": "To 200KB" }
+]
