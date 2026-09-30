@@ -1,7 +1,7 @@
 # Setup check (30 Sep 2026)
 
 - (a) Repository clone and fetch: OK. TomsCoolTools/figade is cloned; `git fetch origin main` succeeded (main at 3d110bc).
-- (b) Push a branch: see the commit that added this file; the branch setup-check-result was pushed with `git push -u origin setup-check-result`.
+- (b) Push a branch: OK. The branch setup-check-result was pushed to origin with `git push -u origin setup-check-result` (commit 8b209a3, author TomsCoolTools).
 - (c) Pull request tool: available (GitHub MCP tool `create_pull_request`). Not used for this check.
 - (d1) Web search: OK. A search for the Gmail attachment limit returned official support.google.com results.
 - (d2) Web fetch, Gmail Help (https://support.google.com/mail/answer/6584): FAILED. WebFetch error: `EGRESS_BLOCKED: Access to support.google.com is blocked by the network egress proxy.` curl: `curl: (56) CONNECT tunnel failed, response 403`.
