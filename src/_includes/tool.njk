@@ -10,6 +10,7 @@ scripts: ["/js/app.js"]
 <div class="limit"><b>{{ limit.big }}</b><span>{{ limit.caption }}{% if limit.checked %}, checked {{ site.checked }}{% endif %}</span></div>
 {%- endif %}
 {% include "partials/compressor.njk" %}
+<p class="also">Need to shrink a photo instead? <a href="/compress-image">Compress an image&nbsp;→</a></p>
 {% include "partials/sizelinks.njk" %}
 {{ content | safe }}
 {%- if fitsTable %}
