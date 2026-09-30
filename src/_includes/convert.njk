@@ -1,0 +1,33 @@
+---
+layout: base.njk
+scripts: ["/js/convert.js"]
+---
+{# convert.njk — Layout for pages with the MP4 converter. Pages supply their words in the front matter.
+  Facts and questions shared by every convert page live here and in src/_data/convertFaq.json. #}
+<h1>{{ h1 }}</h1>
+<p class="s">{{ intro | safe }}</p>
+{% include "partials/converttool.njk" %}
+<p class="also">Need to make a video smaller instead? <a href="/">Compress a video&nbsp;→</a></p>
+{%- set sizes = convertLinks %}
+{%- set sizesHeading = "Other formats" %}
+{% include "partials/sizelinks.njk" %}
+{{ content | safe }}
+<h2>What to know</h2>
+<ul>
+  {%- for f in facts %}
+  <li>{{ f | safe }}</li>
+  {%- endfor %}
+  <li>If the video is already H.264 with AAC sound, it is copied into an MP4 without re-encoding: quick, and no quality is lost.</li>
+  <li>Anything else is converted to H.264 video and AAC sound, which play almost everywhere. That takes longer.</li>
+  <li>The picture size and frame rate stay the same.</li>
+  <li>It reads MOV, MKV, WebM, MP4 and MPEG-TS files. AVI and WMV are not supported.</li>
+  <li>Converting can make the file bigger. To make it smaller, use the <a href="/">compressor</a> afterwards.</li>
+</ul>
+<h2>Questions</h2>
+<dl>
+  {%- for item in convertFaq %}
+  <dt>{{ item.q }}</dt>
+  <dd>{{ item.a }}</dd>
+  {%- endfor %}
+</dl>
+<script type="application/ld+json">{{ { page: page, site: site, h1: h1, description: description, faq: convertFaq } | toolSchema | safe }}</script>

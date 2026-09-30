@@ -1,0 +1,18 @@
+[
+  {
+    "q": "Is my video uploaded?",
+    "a": "No. It is converted on your device and never sent to a server."
+  },
+  {
+    "q": "Why did it take a while?",
+    "a": "Videos that are not already H.264 have to be re-encoded, frame by frame. Most phones and computers have video encoding built in, but a long or 4K clip still takes time."
+  },
+  {
+    "q": "Why is the MP4 bigger than the original?",
+    "a": "HEVC, VP9 and AV1 need less data than H.264 for the same picture, so converting to H.264 can make the file bigger. Use the compressor afterwards to bring it down to the size you need."
+  },
+  {
+    "q": "It says my browser cannot do it.",
+    "a": "Use a current Chrome, Edge or Safari. Not every browser can read every video format."
+  }
+]

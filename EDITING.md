@@ -54,6 +54,8 @@ finished pages.
 | Colours and layout | `static/css/style.css` |
 | The video compressor itself | `static/js/app.js` |
 | The image compressor itself | `static/js/image.js` |
+| The MP4 converter itself | `static/js/convert.js` |
+| MP4 converter pages, their format buttons and questions | `src/convert/`, `src/_data/convertLinks.json`, `src/_data/convertFaq.json` |
 | Image pages, their "Other sizes" buttons and questions | `src/image/`, `src/_data/imageSizes.json`, `src/_data/imageFaq.json` |
 | The video encoder version | `mediabunny` in `package.json` (see Notes) |
 | Anything in the head, or the footer wording | `src/_includes/` |

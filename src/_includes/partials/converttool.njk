@@ -1,0 +1,14 @@
+{# The MP4 converter box. Do not rename the ids — js/convert.js needs them. #}
+<div class="tool">
+  <label for="file">Video <span class="hint">or drop one anywhere on this page</span></label>
+  <input id="file" type="file" accept="video/*,.mkv,.mov,.webm,.ts,.m2ts">
+  <p id="est" aria-live="polite"></p>
+  <button id="go">Convert to MP4</button>
+  <div id="bar"><i></i></div>
+  <p id="st" aria-live="polite"></p>
+  <div id="out"></div>
+  <details>
+    <summary>Details</summary>
+    <pre id="log">Nothing yet.</pre>
+  </details>
+</div>
