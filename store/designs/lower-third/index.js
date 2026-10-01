@@ -48,6 +48,7 @@ export default defineDesign({
   blurb: 'Your name and a title line wipe in at the bottom of the screen, broadcast style.',
   duration: 5,
   poster: 2.4,
+  showcase: { x: 0, y: 500, w: 1024, h: 576 },
   options: {
     name: opt.text({ label: 'Name', default: "Tom's Cool Tools", shared: 'name' }),
     title: opt.text({ label: 'Title line', default: 'New tech reviews every Friday', max: 60 }),

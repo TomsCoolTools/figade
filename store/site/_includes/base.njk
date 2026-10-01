@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if title %}{{ title }} | {% endif %}{{ store.name }}</title>
+  <meta name="description" content="{{ description or 'Personalised subscribe animations, lower thirds and overlays for your videos. Type your details, watch it play, download it.' }}">
+  <meta name="theme-color" content="#2E2D2B">
+  <link rel="preload" href="/fonts/anybody/anybody-latin-standard-normal.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/fonts/fonts.css">
+  <link rel="stylesheet" href="/css/site.css">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+</head>
+<body class="{{ bodyClass }}">
+  <a class="skip" href="#main">Skip to content</a>
+  <header class="masthead">
+    <a class="wordmark" href="/">{{ store.name }}</a>
+    <nav class="masthead-nav" aria-label="Site">
+      <a href="/#designs">Designs</a>
+      <a href="/restore/">Already bought?</a>
+    </nav>
+  </header>
+  <main id="main">
+{{ content | safe }}
+  </main>
+  <footer class="footer">
+    <p>Everything renders in your browser. Your picture and details never leave this device.</p>
+    <nav aria-label="Legal">
+      <a href="/licence/">Licence</a>
+      <a href="/terms/">Terms</a>
+      <a href="/privacy/">Privacy</a>
+      <a href="/refunds/">Refunds</a>
+      <a href="mailto:{{ store.supportEmail }}">{{ store.supportEmail }}</a>
+    </nav>
+  </footer>
+  {% if script %}<script type="module" src="/js/{{ script }}.js"></script>{% endif %}
+</body>
+</html>

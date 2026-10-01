@@ -1,4 +1,76 @@
 ---
-title: Store
+title: Personalised subscribe animations and overlays
+script: storefront
+bodyClass: page-store
 ---
-<p>Storefront placeholder</p>
+{% set total = catalogue.length * 5 %}
+<section class="hero">
+  <div class="hero-copy">
+    <h1 class="hero-title">Your channel, animated.</h1>
+    <p class="lede">Subscribe pop-ups, like reminders and lower thirds with your name and picture in them.</p>
+    <p class="lede-sub">Type your details, watch them play below, then download a file that drops straight into Premiere, CapCut or OBS. From {{ catalogue[0].product.price | price | safe }}.</p>
+    <form class="quick-details" data-quick onsubmit="return false">
+      <label class="field">
+        <span class="field-label">Your channel name</span>
+        <input class="input" name="name" autocomplete="off" maxlength="60" placeholder="Tom's Cool Tools">
+      </label>
+      <span class="btn btn-quiet file-btn">
+        <span data-avatar-label>Add your picture</span>
+        <input type="file" accept="image/*" aria-label="Add your picture" data-avatar-input>
+      </span>
+    </form>
+  </div>
+  <div class="hero-monitor">
+    <figure class="monitor">
+      <figcaption class="monitor-bar"><span>Program: <strong data-active-name>{{ catalogue[0].design.name }}</strong></span><span><span data-zoom>Zoom 200%</span> <span class="tc" data-tc>00:00:00</span></span></figcaption>
+      <div class="screen"><canvas data-monitor aria-label="Live preview of the design under the playhead" role="img"></canvas></div>
+    </figure>
+  </div>
+</section>
+
+<section class="timeline-wrap" id="designs" aria-labelledby="designs-title">
+  <h2 class="visually-hidden" id="designs-title" hidden>Designs</h2>
+  <div class="timeline" style="--total: {{ total }}" data-timeline>
+    <div class="timeline-body">
+    <div class="ruler" aria-hidden="true">
+      {% for s in range(0, total + 1, 5) %}<span style="left: {{ s / total * 100 }}%">00:{{ '0' if s < 10 }}{{ s }}</span>{% endfor %}
+    </div>
+    <ol class="tracks">
+      {% for item in catalogue | reverse %}
+      {% set i = catalogue.length - loop.index %}
+      <li class="track">
+        <span class="track-head" aria-hidden="true">V{{ i + 1 }}</span>
+        <div class="lane">
+          <a class="clip" href="/designs/{{ item.design.id }}/" data-clip="{{ i }}" style="--clip: {{ item.colour }}; --start: {{ i * 5 }}; --len: 5">
+            <span>{{ item.design.name }}</span>
+            <span class="clip-hint">Personalise</span>
+            <span class="price">{{ item.product.price | price | safe }}</span>
+            <span class="clip-progress" aria-hidden="true"></span>
+          </a>
+        </div>
+      </li>
+      {% endfor %}
+    </ol>
+    <div class="playhead" aria-hidden="true"></div>
+    </div>
+    {% for pack in packs %}
+    <div class="sequence">
+      <div>
+        <p class="sequence-name">{{ pack.name }}</p>
+        <p>{{ pack.blurb }}</p>
+      </div>
+      <button class="btn" type="button" data-buy="{{ pack.id }}"><span>Get all {{ pack.designs.length }} for {{ pack.product.price | price | safe }}</span></button>
+    </div>
+    {% endfor %}
+  </div>
+  <p class="status" data-buy-status role="status"></p>
+</section>
+
+<section class="how" aria-labelledby="how-title">
+  <h2 id="how-title">How it works</h2>
+  <ol class="steps">
+    <li><strong>Pick a design and type your details.</strong><span>Your channel name, subscriber count, picture and colours. The preview updates as you type.</span></li>
+    <li><strong>Pay once for that design.</strong><span>Then make as many versions as you like, with any details, whenever you need them. Your licence key arrives by email.</span></li>
+    <li><strong>Download and drop it into your edit.</strong><span>Green screen MP4 for Premiere and CapCut, transparent PNGs for Premiere and After Effects, transparent WebM for OBS.</span></li>
+  </ol>
+</section>

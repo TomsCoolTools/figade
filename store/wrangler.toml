@@ -1,0 +1,13 @@
+# Cloudflare Pages project. Build command: npm run build   Output: dist
+name = "store"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-09-01"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "store"
+database_id = "REPLACE_WITH_D1_DATABASE_ID"
+
+# Secrets (set with `npx wrangler pages secret put NAME`):
+#   LS_WEBHOOK_SECRET   the signing secret of the Lemon Squeezy webhook
+#   UNLOCK_PRIVATE_KEY  printed by `npm run keys`

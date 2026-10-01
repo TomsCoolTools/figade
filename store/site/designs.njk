@@ -1,0 +1,115 @@
+---
+pagination:
+  data: catalogue
+  size: 1
+  alias: item
+permalink: "/designs/{{ item.design.id }}/"
+script: design
+eleventyComputed:
+  title: "{{ item.design.name }}"
+  description: "{{ item.design.blurb }} Personalise it in your browser and download it for Premiere, CapCut or OBS."
+---
+{% set d = item.design %}
+<div style="--clip: {{ item.colour }}" data-design="{{ d.id }}">
+  <div class="design-head">
+    <a class="crumb" href="/#designs">All designs</a>
+    <h1 class="design-title">{{ d.name }}</h1>
+    <p class="design-blurb">{{ d.blurb }}</p>
+  </div>
+
+  <div class="workspace">
+    <div class="stage">
+      <figure class="monitor">
+        <figcaption class="monitor-bar"><span>Program: <strong>{{ d.name }}</strong></span><span class="tc" data-tc>00:00:00</span></figcaption>
+        <div class="screen" data-screen><canvas data-monitor role="img" aria-label="Live preview with your details"></canvas></div>
+        <div class="transport">
+          <button class="icon-btn" type="button" data-play aria-label="Pause">
+            <svg viewBox="0 0 24 24" data-icon-pause><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+            <svg viewBox="0 0 24 24" data-icon-play hidden><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <div class="scrub" data-cues>
+            <input type="range" min="0" max="{{ d.duration * 60 - 1 }}" step="1" value="0" aria-label="Timeline" data-scrub>
+          </div>
+          <span class="tc" data-frame>f 0</span>
+        </div>
+        <div class="view-row">
+          <span>Behind it</span>
+          <div class="seg" role="group" aria-label="Preview background" data-bg>
+            <button type="button" data-value="footage" aria-pressed="true">Video</button>
+            <button type="button" data-value="checker" aria-pressed="false">Transparent</button>
+            <button type="button" data-value="green" aria-pressed="false">Green</button>
+          </div>
+          <span>View</span>
+          <div class="seg" role="group" aria-label="Preview zoom" data-zoom>
+            <button type="button" data-value="fit" aria-pressed="true">Full frame</button>
+            <button type="button" data-value="close" aria-pressed="false">Close-up</button>
+          </div>
+        </div>
+      </figure>
+    </div>
+
+    <div class="controls" data-controls>
+      <div class="controls-bar">Effect controls</div>
+      <details class="group" open>
+        <summary>Your details</summary>
+        <div class="group-body" data-group="details"></div>
+      </details>
+      <details class="group" open>
+        <summary>Style</summary>
+        <div class="group-body" data-group="style"></div>
+      </details>
+      <details class="group" open>
+        <summary>Export</summary>
+        <div class="group-body">
+          <div class="row">
+            <span class="field-label" id="fmt-label">File</span>
+            <div class="seg" role="group" aria-labelledby="fmt-label" data-format>
+              {% for key, f in formats %}<button type="button" data-value="{{ key }}" aria-pressed="{{ 'true' if loop.first else 'false' }}">{{ f.short }}</button>{% endfor %}
+            </div>
+          </div>
+          <p class="field-note" data-format-note></p>
+          <div class="row" style="margin-top: 12px">
+            <span class="field-label" id="fps-label">Frame rate</span>
+            <div class="seg" role="group" aria-labelledby="fps-label" data-fps>
+              <button type="button" data-value="60" aria-pressed="true">60 fps</button>
+              <button type="button" data-value="30" aria-pressed="false">30 fps</button>
+            </div>
+          </div>
+          <div class="row">
+            <span class="field-label" id="sound-label">Sound</span>
+            <div class="seg" role="group" aria-labelledby="sound-label" data-sound>
+              <button type="button" data-value="off" aria-pressed="true">Off</button>
+              <button type="button" data-value="on" aria-pressed="false">Clicks and pops</button>
+            </div>
+          </div>
+          <p class="unavailable" data-unavailable hidden></p>
+        </div>
+      </details>
+      <div class="buy" data-buy-box>
+        <div data-locked>
+          <div class="price-line">
+            <span class="price-big price">{{ item.product.price | price | safe }}</span>
+            <span class="price-note">One payment, any details, as many times as you like</span>
+          </div>
+          <button class="btn btn-block" type="button" data-buy="{{ d.id }}" style="--btn: var(--clip); margin-top: 12px"><span>Buy for {{ item.product.price | price | safe }}</span></button>
+          {% for pack in packs %}{% if d.id in pack.designs %}
+          <button class="btn btn-quiet btn-block" type="button" data-buy="{{ pack.id }}" style="margin-top: 8px"><span>Or all {{ pack.designs.length }} in the {{ pack.name }} for {{ pack.product.price | price | safe }}</span></button>
+          {% endif %}{% endfor %}
+          <p class="price-note" style="margin-top: 12px">
+            <button class="link-btn" type="button" data-export="watermarked">Download with watermark</button> to try it in your editor first.
+            <a href="/restore/">Already bought?</a>
+          </p>
+        </div>
+        <div data-unlocked hidden>
+          <p class="status is-good" data-unlocked-note>Unlocked in this browser.</p>
+          <button class="btn btn-block" type="button" data-export="clean" style="--btn: var(--clip); margin-top: 10px"><span data-clean-label>Download clean MP4</span></button>
+        </div>
+        <div class="progress" data-progress hidden>
+          <div class="progress-track"><div class="progress-fill" data-progress-fill></div></div>
+          <div class="progress-row"><span data-progress-label>Rendering…</span><button class="link-btn" type="button" data-cancel>Cancel</button></div>
+        </div>
+        <p class="status" data-status role="status"></p>
+      </div>
+    </div>
+  </div>
+</div>

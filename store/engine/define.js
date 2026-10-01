@@ -37,6 +37,8 @@ export function defineDesign(def) {
     sounds: () => [],
     fonts: () => [],
     blurb: '',
+    // Region (design units, 16:9) the storefront monitor zooms to.
+    showcase: { x: 480, y: 540, w: 960, h: 540 },
     ...def,
   };
 }

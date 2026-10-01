@@ -17,10 +17,14 @@ export class Renderer {
   }
 
   drawOnce(ctx, t, job) {
-    const { design, scene, frame } = job;
+    const { design, scene, frame, view } = job;
     const W = ctx.canvas.width, H = ctx.canvas.height;
     ctx.save();
-    if (W !== frame.w || H !== frame.h) ctx.scale(W / frame.w, H / frame.h);
+    if (view) {
+      // A zoomed-in region of the frame (design units), as in a monitor zoom.
+      ctx.scale(W / view.w, H / view.h);
+      ctx.translate(-view.x, -view.y);
+    } else if (W !== frame.w || H !== frame.h) ctx.scale(W / frame.w, H / frame.h);
     design.render(ctx, t, scene, frame);
     ctx.restore();
   }
@@ -58,21 +62,21 @@ export function drawWatermark(ctx, text) {
   ctx.save();
   ctx.translate(W / 2, H / 2);
   ctx.rotate(-0.32);
-  ctx.font = font(700, Math.round(46 * k), 'Anybody');
+  ctx.font = font(700, Math.round(40 * k), 'Anybody');
   ctx.fontStretch = 'expanded';
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
   ctx.lineJoin = 'round';
-  const stepX = 560 * k, stepY = 150 * k;
+  const stepX = 620 * k, stepY = 210 * k;
   const reach = Math.hypot(W, H) / 2 + stepX;
   let row = 0;
   for (let y = -reach; y <= reach; y += stepY, row++) {
     const offset = (row % 2) * (stepX / 2);
     for (let x = -reach - offset; x <= reach; x += stepX) {
-      ctx.lineWidth = 5 * k;
-      ctx.strokeStyle = 'rgba(0,0,0,0.22)';
+      ctx.lineWidth = 4 * k;
+      ctx.strokeStyle = 'rgba(0,0,0,0.16)';
       ctx.strokeText(text, x, y);
-      ctx.fillStyle = 'rgba(255,255,255,0.42)';
+      ctx.fillStyle = 'rgba(255,255,255,0.34)';
       ctx.fillText(text, x, y);
     }
   }

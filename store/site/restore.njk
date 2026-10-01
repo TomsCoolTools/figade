@@ -1,0 +1,25 @@
+---
+title: Already bought?
+permalink: /restore/
+script: restore
+---
+<div class="page">
+  <a class="crumb" href="/">Back to the designs</a>
+  <h1>Already bought?</h1>
+  <p>Paste the licence key from your receipt email. It unlocks clean downloads in this browser, on this device or any other one.</p>
+  <form class="restore-form" data-restore>
+    <label class="field">
+      <span class="field-label">Licence key</span>
+      <input class="input" name="key" autocomplete="off" spellcheck="false" placeholder="XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX" required>
+    </label>
+    <button class="btn" type="submit">Unlock</button>
+  </form>
+  <p class="status" data-status role="status"></p>
+  <div data-result hidden>
+    <h2>Unlocked in this browser</h2>
+    <ul class="unlocked-list" data-list></ul>
+  </div>
+  <h2>Can't find your key?</h2>
+  <p>It's in the receipt email from Lemon Squeezy, sent to the address you paid with. Search your inbox for "{{ store.name }}" or "Lemon Squeezy". If it's not there, email <a href="mailto:{{ store.supportEmail }}">{{ store.supportEmail }}</a> with the email address you used and we'll resend it.</p>
+  <p>Each key works in up to {{ store.activationLimit }} browsers. Clearing your browser's data uses up one of them when you unlock again.</p>
+</div>

@@ -152,7 +152,7 @@ function drawBellButton(ctx, t, sc, L) {
 
 export default defineDesign({
   id: 'like-bell',
-  name: 'Like + bell reminder',
+  name: 'Like and bell reminder',
   blurb: 'Your message pops up, the cursor hits like, then rings the bell.',
   duration: 5,
   poster: 2.3,

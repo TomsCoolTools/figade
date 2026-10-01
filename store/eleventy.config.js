@@ -9,7 +9,9 @@ export default function (eleventyConfig) {
   eleventyConfig.addGlobalData('packs', packList);
   eleventyConfig.addGlobalData('formats', FORMATS);
   eleventyConfig.addGlobalData('dev', () => process.env.STORE_DEV === '1');
-  eleventyConfig.addFilter('price', (n) => `$${Number.isInteger(n) ? n : n.toFixed(2)}`);
+  // Anybody's dollar sign barely shows its stroke and reads as an S, so the
+  // symbol is set in Roboto.
+  eleventyConfig.addFilter('price', (n) => `<span class="cur">$</span>${Number.isInteger(n) ? n : n.toFixed(2)}`);
   eleventyConfig.addFilter('json', (v) => JSON.stringify(v));
   return {
     dir: { input: 'site', includes: '_includes', data: '_data', output: 'dist' },
