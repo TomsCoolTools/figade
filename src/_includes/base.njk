@@ -13,11 +13,11 @@
     {%- if not noindex %}
     <link rel="canonical" href="{{ site.url }}{{ cpath }}">
     {%- endif %}
-    <link rel="icon" href="/favicon.ico" sizes="48x48">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="icon" type="image/png" sizes="96x96" href="/img/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/img/android-chrome-192x192.png">
-    <link rel="apple-touch-icon" href="/img/apple-touch-icon.png">
+    <link rel="icon" href="{{ '/favicon.ico' | v }}" sizes="48x48">
+    <link rel="icon" href="{{ '/favicon.svg' | v }}" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="96x96" href="{{ '/img/favicon-96x96.png' | v }}">
+    <link rel="icon" type="image/png" sizes="192x192" href="{{ '/img/android-chrome-192x192.png' | v }}">
+    <link rel="apple-touch-icon" href="{{ '/img/apple-touch-icon.png' | v }}">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="{{ site.themeColor }}" media="(prefers-color-scheme: light)">
     <meta name="theme-color" content="{{ site.themeColorDark }}" media="(prefers-color-scheme: dark)">
