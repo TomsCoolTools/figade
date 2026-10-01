@@ -4,6 +4,7 @@
 
 import { defineDesign, opt, fx, font, truncate, formatSubscribers, initialsOf, colourFor, mixHex,
   roundRect, clamp, lerp, ease, tween, spring, press } from '../../engine/index.js';
+import { style } from '../../packs/studio.js';
 
 // Timeline, in seconds.
 const T = {
@@ -41,10 +42,7 @@ const S = {
 };
 S.cardH = S.pad * 2 + S.avatar;
 
-export const THEMES = {
-  dark: { card: '#212121', border: 'rgba(255,255,255,0.07)', name: '#F1F1F1', subs: '#AAAAAA', icon: '#F1F1F1', iconBg: '#383838', press: '255,255,255', pressAlpha: 0.18 },
-  light: { card: '#FFFFFF', border: 'rgba(0,0,0,0.07)', name: '#0F0F0F', subs: '#606060', icon: '#0F0F0F', iconBg: '#F2F2F2', press: '0,0,0', pressAlpha: 0.12 },
-};
+const THEMES = style.themes;
 
 function buttonStyle(style, theme) {
   if (style === 'classic') {

@@ -5,3 +5,4 @@ export * from './bell.js';
 export * from './avatar.js';
 export * from './reveal.js';
 export * from './card.js';
+export * from './icons.js';

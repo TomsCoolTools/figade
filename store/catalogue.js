@@ -4,8 +4,11 @@
 import config from './store.config.js';
 import studio from './packs/studio.js';
 import subscribePop from './designs/subscribe-pop/index.js';
+import likeBell from './designs/like-bell/index.js';
+import followCard from './designs/follow-card/index.js';
+import lowerThird from './designs/lower-third/index.js';
 
-export const designs = [subscribePop];
+export const designs = [subscribePop, likeBell, followCard, lowerThird];
 export const packs = [studio];
 
 // Each design's colour on the storefront timeline (section 7 of the spec).

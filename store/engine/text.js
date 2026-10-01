@@ -74,10 +74,11 @@ export function formatHandle(input, fallbackName) {
 }
 
 export function initialsOf(name) {
-  const words = String(name).trim().split(/\s+/).filter(Boolean);
+  // Only words that contain a letter or number count, so emoji are skipped.
+  const first = (w) => w.match(/[\p{L}\p{N}]/u)[0];
+  const words = String(name).trim().split(/\s+/).filter((w) => /[\p{L}\p{N}]/u.test(w));
   if (!words.length) return '?';
-  const letters =
-    words.length === 1 ? [...words[0]].slice(0, 1) : [[...words[0]][0], [...words[words.length - 1]][0]];
+  const letters = words.length === 1 ? [first(words[0])] : [first(words[0]), first(words[words.length - 1])];
   return letters.join('').toUpperCase();
 }
 
