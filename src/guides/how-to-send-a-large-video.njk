@@ -1,0 +1,40 @@
+---
+title: "How to send a large video: Discord, email, WhatsApp"
+order: 2
+description: "A video too big to send? The limits for Discord, email and WhatsApp, and three ways around them: compress it, trim it, or send a link instead."
+h1: "How to send a large video"
+tool:
+  url: "/"
+  label: "Shrink a video to fit a limit"
+---
+<p>Most apps cap how big a file you can send. When a video is over the cap, there are three ways round it: <strong>make the file smaller, make the video shorter, or send a link instead of the file.</strong></p>
+
+<h2>The limits that usually get in the way</h2>
+<div class="tw">
+  <table>
+    <caption>Limits as listed on each page, checked {{ site.checked }}</caption>
+    <thead><tr><th scope="col">Where</th><th scope="col">Size to aim for</th><th scope="col">Details</th></tr></thead>
+    <tbody>
+      <tr><th scope="row">Discord</th><td>{{ collections.video | limitOf("discord") }}</td><td><a href="/compress-video-for-discord">Discord page</a></td></tr>
+      <tr><th scope="row">Email</th><td>{{ collections.video | targetOf("email") }} MB</td><td><a href="/compress-video-for-email">Email page</a></td></tr>
+      <tr><th scope="row">WhatsApp</th><td>{{ collections.video | limitOf("whatsapp") }}</td><td><a href="/compress-video-for-whatsapp">WhatsApp page</a></td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Each page explains where its number comes from. Email is the tricky one: an attached file grows by about a third on the way, so a file just under the listed limit can still bounce. That is why the email size above is lower than the limits Gmail and Outlook list.</p>
+
+<h2>1. Make the file smaller</h2>
+<p>Compressing re-encodes the video with less data per second. Pick the size you need and the compressor aims to land just under it. A short clip keeps its sharpness; a long one is scaled down to a lower resolution so it stays clean rather than turning blocky.</p>
+
+<h2>2. Make it shorter</h2>
+<p>File size is data per second times length, so cutting the length is the most direct way to save space. Half the length means half the size at the same quality. If only part of the video matters, trim it first and the rest can stay sharper.</p>
+
+<h2>3. Send a link instead</h2>
+<p>For a long video or a big one you want to keep at full quality, put it in cloud storage such as Google Drive, iCloud or Dropbox and send the link. Gmail and Outlook both offer to do this for you when a file is too big to attach. The person you send it to downloads the original.</p>
+
+<h2>Which to choose</h2>
+<ul>
+  <li><strong>A short clip for a chat:</strong> compress it to the app's limit.</li>
+  <li><strong>A long video where only part matters:</strong> trim it, then compress it.</li>
+  <li><strong>A long video that must stay at full quality:</strong> send a link.</li>
+</ul>

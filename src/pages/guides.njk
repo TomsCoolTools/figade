@@ -6,7 +6,7 @@ permalink: "guides/index.html"
 ---
 <p class="s">Short answers to common questions about file sizes and formats.</p>
 <ul>
-  {%- for g in collections.guide %}
+  {%- for g in collections.guide | byOrder %}
   <li><a href="{{ g.url | replace('.html', '') }}">{{ g.data.h1 }}</a></li>
   {%- endfor %}
 </ul>
