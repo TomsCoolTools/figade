@@ -61,6 +61,12 @@ export function copyHarness() {
 
 if (import.meta.url === `file://${process.argv[1]}`) {
   const dev = process.argv.includes('--dev');
+  // --pages-only: just the HTML (used by the dev server's watcher).
+  if (process.argv.includes('--pages-only')) {
+    await eleventy({ dev }).write();
+    if (dev) copyHarness();
+    process.exit(0);
+  }
   fs.rmSync(out, { recursive: true, force: true });
   await esbuild.build(await jsOptions({ dev }));
   await eleventy({ dev }).write();

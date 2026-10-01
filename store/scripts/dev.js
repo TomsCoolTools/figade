@@ -7,6 +7,7 @@
 
 import fs from 'node:fs';
 import http from 'node:http';
+import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import * as esbuild from 'esbuild';
@@ -57,7 +58,19 @@ export async function startDevServer({ port = 8787, watch = true, fresh = false,
   copyHarness();
   if (watch) {
     await js.watch();
-    await elev.watch();
+    // Pages are rebuilt in a fresh process so edits to designs, packs and the
+    // config (which the page templates import) are picked up.
+    let timer;
+    const rebuildPages = () => {
+      clearTimeout(timer);
+      timer = setTimeout(() => {
+        const r = spawnSync(process.execPath, ['scripts/build.js', '--dev', '--pages-only'], { cwd: root, env: process.env, encoding: 'utf8' });
+        log(r.status === 0 ? 'Pages rebuilt' : `Page build failed:\n${r.stderr}`);
+      }, 150);
+    };
+    for (const p of ['site', 'designs', 'packs', 'engine', 'catalogue.js', 'store.config.js']) {
+      fs.watch(path.join(root, p), { recursive: true }, rebuildPages);
+    }
     log('Watching for changes…');
   }
 
