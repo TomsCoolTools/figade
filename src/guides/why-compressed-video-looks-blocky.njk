@@ -1,0 +1,26 @@
+---
+title: "Why is my compressed video blocky? How to fix it"
+order: 3
+description: "Blocky, smeared video after compressing comes from too little data for each pixel. Why it happens, and four ways to keep a small video looking clean."
+h1: "Why does my compressed video look blocky?"
+tool:
+  url: "/"
+  label: "Compress a video without the blocks"
+---
+<p>Blocks, smears and muddy patches appear when a video has <strong>too little data for the number of pixels it has to fill.</strong> The encoder runs out of room and has to throw detail away, and it does that in squares.</p>
+
+<h2>What is going on</h2>
+<p>A video is a stream of pictures, and the encoder gets a fixed budget of data per second to describe them. Spread a small budget across a big picture and each pixel gets almost nothing.</p>
+<p>For example, a 1 minute video squeezed into 10MB has roughly 1.3 megabits for every second, all in. Shared across a full 1080p picture, that is too little: the result breaks into blocks, worst on anything that moves.</p>
+
+<h2>Why movement makes it worse</h2>
+<p>Encoders save space by only describing what changed since the last frame. A still scene changes very little, so it compresses well. Shaky footage, sport, crowds, water and confetti change almost everything every frame, so they need far more data and fall apart first.</p>
+
+<h2>Four ways to keep it clean</h2>
+<ul>
+  <li><strong>Lower the resolution.</strong> Fewer pixels means more data for each one. A clean 720p video looks much better than a blocky 1080p one. The compressor does this for you: it picks the highest resolution that still gets enough data per pixel.</li>
+  <li><strong>Make it shorter.</strong> At the same file size, half the length gives each second twice the data.</li>
+  <li><strong>Pick a bigger size if you can.</strong> If the app allows 20MB, use 20MB rather than 10MB.</li>
+  <li><strong>Hold the camera still.</strong> Steady footage needs less data, so it survives compression far better.</li>
+</ul>
+<p>Videos filmed at 60 frames per second are also brought down to 30 when the size is tight, which leaves more data for each frame. The <a href="/video-size-guide">size guide</a> shows how long a clip each size can hold at each resolution.</p>

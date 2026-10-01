@@ -24,6 +24,19 @@ module.exports = function (eleventyConfig) {
     });
   });
 
+  // A platform page's current limit (e.g. "20 MB") or target size, so guides quote the same number
+  // as the page itself and stay correct when a limit is updated there. Fails the build if missing.
+  const platformPage = (pages, key) => {
+    const p = pages.find((i) => i.data.toolKey === key);
+    if (!p) throw new Error("No page with toolKey " + key);
+    return p.data;
+  };
+  eleventyConfig.addFilter("limitOf", (pages, key) => platformPage(pages, key).limit.big);
+  eleventyConfig.addFilter("targetOf", (pages, key) => platformPage(pages, key).target);
+
+  // Guides in the order set by "order" in each guide's front matter.
+  eleventyConfig.addFilter("byOrder", (items) => [...items].sort((a, b) => (a.data.order || 99) - (b.data.order || 99)));
+
   // Structured data for a page with the compressor, so search engines know it is a free
   // browser tool, and what its questions and answers are. Everything in it is shown on the page.
   eleventyConfig.addFilter("toolSchema", (data) => {
