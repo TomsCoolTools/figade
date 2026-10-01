@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Subscribe animation prototype</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <h1>Subscribe animation</h1>
+    <span class="tag">prototype</span>
+  </header>
+
+  <main class="layout">
+    <section class="stage-col">
+      <div class="stage bg-checker" id="stage">
+        <canvas id="preview" width="1920" height="1080"></canvas>
+      </div>
+
+      <div class="transport">
+        <button id="play" class="icon-btn" title="Play / pause (Space)" aria-label="Play or pause">
+          <svg id="icon-play" viewBox="0 0 24 24" hidden><path d="M8 5v14l11-7z"/></svg>
+          <svg id="icon-pause" viewBox="0 0 24 24"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+        </button>
+        <input id="scrub" type="range" min="0" max="299" step="1" value="0" aria-label="Timeline">
+        <span id="time" class="time">0.00 s · f 0</span>
+      </div>
+
+      <div class="view-opts">
+        <label>Speed
+          <select id="speed">
+            <option value="1">1×</option>
+            <option value="0.5">0.5×</option>
+            <option value="0.25">0.25×</option>
+          </select>
+        </label>
+        <label>Background
+          <select id="bg">
+            <option value="checker">Checkerboard</option>
+            <option value="green">Green screen</option>
+            <option value="footage">Sample footage</option>
+            <option value="dark">Dark</option>
+            <option value="light">Light</option>
+          </select>
+        </label>
+        <label class="check"><input id="loop" type="checkbox" checked> Loop</label>
+        <label class="check"><input id="blur" type="checkbox" checked> Motion blur</label>
+        <span class="hint">Space: play/pause · ← →: step one frame</span>
+      </div>
+    </section>
+
+    <aside class="panel">
+      <h2>Channel</h2>
+      <label class="field">Channel name
+        <input id="name" type="text" value="Tom's Cool Tools" maxlength="60">
+      </label>
+      <label class="field">Subscribers
+        <input id="subs" type="text" value="128400" placeholder="e.g. 128400 or 1.2M">
+        <small id="subs-out"></small>
+      </label>
+      <div class="field">Profile picture
+        <div class="avatar-row">
+          <label class="file-btn">
+            <input id="avatar" type="file" accept="image/*">
+            Upload image
+          </label>
+          <button id="avatar-clear" class="link-btn" hidden>Remove</button>
+        </div>
+        <small>No picture? Initials on a coloured circle are used.</small>
+      </div>
+
+      <h2>Style</h2>
+      <div class="field">Card
+        <div class="seg" data-name="theme">
+          <button data-value="dark" class="on">Dark</button>
+          <button data-value="light">Light</button>
+        </div>
+      </div>
+      <div class="field">Button
+        <div class="seg" data-name="button">
+          <button data-value="classic" class="on">Classic red</button>
+          <button data-value="modern">Modern pill</button>
+        </div>
+      </div>
+      <div class="field">Position
+        <div class="seg" data-name="position">
+          <button data-value="center" class="on">Bottom centre</button>
+          <button data-value="left">Bottom left</button>
+        </div>
+      </div>
+      <label class="field">Accent colour
+        <span class="colour-row">
+          <input id="accent" type="color" value="#ff0033">
+          <span id="accent-hex">#FF0033</span>
+        </span>
+      </label>
+
+      <h2>Export</h2>
+      <p class="note">1920×1080 · 60 fps · 5 s · rendered in your browser</p>
+      <button id="export-mp4" class="primary">Green screen MP4</button>
+      <button id="export-png" class="secondary">Transparent PNG sequence (.zip)</button>
+      <div id="progress" class="progress" hidden>
+        <div class="bar"><span id="bar-fill"></span></div>
+        <div class="progress-row">
+          <span id="progress-label">Rendering…</span>
+          <button id="cancel" class="link-btn">Cancel</button>
+        </div>
+      </div>
+      <p id="error" class="error" hidden></p>
+    </aside>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
