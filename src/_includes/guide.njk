@@ -1,0 +1,21 @@
+---
+layout: base.njk
+textPage: true
+---
+{# guide.njk — Layout for a guide. Each guide ends by pointing to the tool that solves the problem. #}
+<h1>{{ h1 }}</h1>
+{{ content | safe }}
+{%- if tool %}
+<p class="next"><a href="{{ tool.url }}">{{ tool.label }}&nbsp;→</a></p>
+{%- endif %}
+<p class="s">More in <a href="/guides/">Guides</a>.</p>
+<script type="application/ld+json">{{ {
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": h1,
+  "description": description,
+  "url": site.url + page.url | replace(".html", ""),
+  "dateModified": page.date | isoDate,
+  "author": { "@type": "Person", "name": "Tom" },
+  "publisher": { "@type": "Organization", "name": site.name, "url": site.url + "/" }
+} | dump | replace("<", "\\u003c") | safe }}</script>

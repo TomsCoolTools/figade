@@ -1,0 +1,6 @@
+{
+  "layout": "guide.njk",
+  "permalink": "guides/{{ page.fileSlug }}.html",
+  "tags": "guide",
+  "date": "git Last Modified"
+}
