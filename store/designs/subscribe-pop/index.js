@@ -81,8 +81,8 @@ const NAME_FONT = font(500, 36);
 const SUBS_FONT = font(400, 25);
 
 function layout(t, sc) {
-  const swapP = spring(t - T.swap, 2.4, 0.82);
-  const slotP = spring(t - T.bellSlot, 2.1, 0.8);
+  const swapP = spring(t - T.swap, 2.4, 0.82, sc.w1 - sc.w0);
+  const slotP = spring(t - T.bellSlot, 2.1, 0.8, S.bellGap + S.bellD);
   const btnW = lerp(sc.w0, sc.w1, swapP);
   const slot = (S.bellGap + S.bellD) * slotP;
   const textX = S.pad + S.avatar + S.gap1;
@@ -94,8 +94,8 @@ function layout(t, sc) {
   return { cardX, cardY, cardW, textX, btnX, btnY, btnW, bellCX: btnX + btnW + S.bellGap + S.bellD / 2, bellCY: S.cardH / 2 };
 }
 
-function drawCardLayer(ctx, t, sc, L) {
-  const inP = spring(t - T.cardIn, 1.45, 0.68);
+function drawCardLayer(ctx, t, sc, L, frame) {
+  const inP = spring(t - T.cardIn, 1.45, 0.68, S.cardH + 150);
   const outP = tween(t, T.cardOut, 0.6, ease.inBack);
   const alpha = tween(t, T.cardIn, 0.22, ease.outCubic) * (1 - tween(t, T.cardOut + 0.32, 0.28, ease.inCubic));
   if (alpha <= 0.001) return;
@@ -108,10 +108,10 @@ function drawCardLayer(ctx, t, sc, L) {
   ctx.translate(L.cardX + L.cardW / 2, L.cardY + S.cardH + dy);
   ctx.scale(scale, scale);
   ctx.translate(-L.cardW / 2, -S.cardH);
-  fx.drawCard(ctx, L.cardW, S.cardH, S.radius, { fill: sc.theme.card, border: sc.theme.border });
+  fx.drawCard(ctx, L.cardW, S.cardH, S.radius, { fill: sc.theme.card, border: sc.theme.border, shadow: frame.shadows !== false });
 
   // Avatar
-  const p = spring(t - T.avatar, 2.1, 0.55);
+  const p = spring(t - T.avatar, 2.1, 0.55, S.avatar / 2);
   if (p > 0) {
     const r = S.avatar / 2;
     ctx.save();
@@ -134,7 +134,7 @@ function drawCardLayer(ctx, t, sc, L) {
 
 function drawButton(ctx, t, sc, L) {
   const { btn } = sc;
-  const inP = spring(t - T.button, 2.0, 0.52);
+  const inP = spring(t - T.button, 2.0, 0.52, sc.w1);
   if (inP <= 0) return;
   const scale = lerp(0.45, 1, inP) * (1 - 0.06 * press(t, T.click1));
   const w = L.btnW;
@@ -185,7 +185,7 @@ function drawButton(ctx, t, sc, L) {
 }
 
 function drawBell(ctx, t, sc, L) {
-  const inP = spring(t - T.bellIn, 2.3, 0.5);
+  const inP = spring(t - T.bellIn, 2.3, 0.5, S.bellD);
   if (inP <= 0) return;
   const { theme, btn } = sc;
   const scale = lerp(0.2, 1, inP) * (1 - 0.09 * press(t, T.click2));
@@ -292,9 +292,9 @@ export default defineDesign({
     return sc;
   },
 
-  render(ctx, t, sc) {
+  render(ctx, t, sc, frame) {
     const L = layout(t, sc);
-    drawCardLayer(ctx, t, sc, L);
+    drawCardLayer(ctx, t, sc, L, frame);
     fx.drawBurst(ctx, t, T.swap, sc.click1, sc.accent, sc.particles);
     const alpha = tween(t, T.cursorIn, 0.18, ease.easy) * (1 - tween(t, T.cursorGone - 0.3, 0.3, ease.easy));
     fx.drawCursor(ctx, t, sc.cursor, { alpha, press: Math.max(press(t, T.click1), press(t, T.click2)) });

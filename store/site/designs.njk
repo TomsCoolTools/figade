@@ -82,6 +82,14 @@ eleventyComputed:
               <button type="button" data-value="on" aria-pressed="false">Clicks and pops</button>
             </div>
           </div>
+          <div class="row">
+            <span class="field-label" id="shadow-label">Shadow</span>
+            <div class="seg" role="group" aria-labelledby="shadow-label" data-shadows>
+              <button type="button" data-value="on" aria-pressed="true">On</button>
+              <button type="button" data-value="off" aria-pressed="false">Off</button>
+            </div>
+          </div>
+          <p class="field-note" data-shadow-note hidden>For the cleanest green screen key, turn the shadow off, or keep it and set Ultra Key's Shadow to 0 in Premiere.</p>
           <p class="unavailable" data-unavailable hidden></p>
         </div>
       </details>
@@ -95,10 +103,8 @@ eleventyComputed:
           {% for pack in packs %}{% if d.id in pack.designs %}
           <button class="btn btn-quiet btn-block" type="button" data-buy="{{ pack.id }}" style="margin-top: 8px"><span>Or all {{ pack.designs.length }} in the {{ pack.name }} for {{ pack.product.price | price | safe }}</span></button>
           {% endif %}{% endfor %}
-          <p class="price-note" style="margin-top: 12px">
-            <button class="link-btn" type="button" data-export="watermarked">Download with watermark</button> to try it in your editor first.
-            <a href="/restore/">Already bought?</a>
-          </p>
+          <button class="btn btn-quiet btn-block" type="button" data-export="watermarked" style="margin-top: 8px"><span>Try it free with a watermark</span></button>
+          <p class="price-note" style="margin-top: 12px">Check it in your editor before you buy. <a href="/restore/">Already bought?</a></p>
         </div>
         <div data-unlocked hidden>
           <p class="status is-good" data-unlocked-note>Unlocked in this browser.</p>

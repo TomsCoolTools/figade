@@ -13,6 +13,8 @@ export function revealLine(ctx, t, { start, text, font, colour, x, baseline, ris
   ctx.font = font;
   ctx.fillStyle = colour;
   ctx.textBaseline = 'alphabetic';
-  fillTextLeft(ctx, text, x, baseline + (1 - p) * (rise + 12));
+  // Finish the last half pixel at once so the text doesn't creep after it looks still.
+  const offset = (1 - p) * (rise + 12);
+  fillTextLeft(ctx, text, x, baseline + (offset < 0.5 ? 0 : offset));
   ctx.restore();
 }

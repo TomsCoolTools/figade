@@ -33,7 +33,7 @@ const LABELS = ['Follow', 'Following'];
 const CHECK = 26; // check mark size in px, drawn before "Following"
 
 function layout(t, sc) {
-  const btnW = lerp(sc.w0, sc.w1, spring(t - T.swap, 2.4, 0.82));
+  const btnW = lerp(sc.w0, sc.w1, spring(t - T.swap, 2.4, 0.82, sc.w1 - sc.w0));
   const textX = S.pad + S.avatar + S.gap1;
   const btnX = textX + sc.textW + S.gap2;
   const cardW = btnX + btnW + S.pad;
@@ -43,7 +43,7 @@ function layout(t, sc) {
 }
 
 function drawAvatar(ctx, t, sc) {
-  const p = spring(t - T.avatar, 2.1, 0.55);
+  const p = spring(t - T.avatar, 2.1, 0.55, S.avatar / 2);
   if (p <= 0) return;
   const r = S.avatar / 2;
   ctx.save();
@@ -66,7 +66,7 @@ function drawAvatar(ctx, t, sc) {
 
 function drawButton(ctx, t, sc, L) {
   const { theme } = sc;
-  const inP = spring(t - T.button, 2.0, 0.52);
+  const inP = spring(t - T.button, 2.0, 0.52, sc.w1);
   if (inP <= 0) return;
   const w = L.btnW, h = S.btnH;
   const scale = lerp(0.45, 1, inP) * (1 - 0.06 * press(t, T.click));
@@ -199,7 +199,7 @@ export default defineDesign({
     return sc;
   },
 
-  render(ctx, t, sc) {
+  render(ctx, t, sc, frame) {
     const L = layout(t, sc);
     const m = cardMotion(t, T.cardIn, T.cardOut, S.cardH);
     if (m.alpha > 0.001) {
@@ -208,7 +208,7 @@ export default defineDesign({
       ctx.translate(L.cardX + L.cardW / 2, L.cardY + S.cardH + m.dy);
       ctx.scale(m.scale, m.scale);
       ctx.translate(-L.cardW / 2, -S.cardH);
-      fx.drawCard(ctx, L.cardW, S.cardH, style.radius, { fill: sc.theme.card, border: sc.theme.border });
+      fx.drawCard(ctx, L.cardW, S.cardH, style.radius, { fill: sc.theme.card, border: sc.theme.border, shadow: frame.shadows !== false });
       drawAvatar(ctx, t, sc);
       const cy = S.cardH / 2;
       fx.revealLine(ctx, t, { start: T.name, text: sc.name, font: NAME_FONT, colour: sc.theme.name, x: L.textX, baseline: cy - 5, rise: 36, maskWidth: S.textMax });

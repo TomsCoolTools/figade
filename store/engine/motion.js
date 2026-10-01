@@ -59,15 +59,31 @@ export function tween(t, start, dur, fn = ease.linear) {
 
 // Damped harmonic oscillator going from 0 to 1, started at time 0.
 // freq is the natural frequency in Hz, zeta the damping ratio (<1 overshoots).
-export function spring(t, freq = 2, zeta = 0.6) {
+function rawSpring(t, w, zeta) {
+  if (zeta >= 1) return 1 - Math.exp(-w * t) * (1 + w * t);
+  const wd = w * Math.sqrt(1 - zeta * zeta);
+  return 1 - Math.exp(-zeta * w * t) * (Math.cos(wd * t) + ((zeta * w) / wd) * Math.sin(wd * t));
+}
+
+// settlePx: roughly how many pixels the spring moves something. After the
+// overshoot a spring dips slightly below its target and creeps back for a long
+// time. When that dip is under 2px it can't be seen as motion, only as a late
+// one-pixel jump of text (Chrome snaps text to whole pixels). So once the
+// spring swings back through its target, the dip is eased out over 0.1s while
+// things are still visibly moving, and it rests exactly on 1 from then on.
+export function spring(t, freq = 2, zeta = 0.6, settlePx = 0) {
   if (t <= 0) return 0;
   const w = 2 * Math.PI * freq;
-  if (zeta >= 1) {
-    return 1 - Math.exp(-w * t) * (1 + w * t);
-  }
+  const x = rawSpring(t, w, zeta);
+  if (!settlePx || zeta >= 1) return x;
   const wd = w * Math.sqrt(1 - zeta * zeta);
-  const e = Math.exp(-zeta * w * t);
-  return 1 - e * (Math.cos(wd * t) + ((zeta * w) / wd) * Math.sin(wd * t));
+  const t1 = (Math.PI - Math.atan2(wd, zeta * w)) / wd; // first pass through 1
+  const t2 = t1 + Math.PI / wd; // back through 1 after the overshoot
+  const dipPx = Math.abs(1 - rawSpring(t2 + Math.PI / (2 * wd), w, zeta)) * settlePx;
+  if (dipPx >= 2) return x; // a real, visible bounce: leave it alone
+  if (t <= t2) return x;
+  const k = Math.min(1, (t - t2) / 0.1);
+  return x + (1 - x) * k * k * (3 - 2 * k);
 }
 
 // A quick press-and-release curve, used for clicks. Returns 0 at rest and 1

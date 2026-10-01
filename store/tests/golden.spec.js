@@ -1,10 +1,12 @@
-// Golden frames: each design renders exactly as approved. subscribe-pop's
-// references were rendered by the original subscribe-demo, so this also
-// proves the engine port still matches the prototype.
+// Golden frames: each design renders exactly as approved.
+//
+// subscribe-pop matched the original subscribe-demo pixel for pixel when it was
+// ported (Phase 0 check). It has since deliberately moved on: springs now land
+// without a late 1px creep, and motion blur is averaged in float16 so shadows
+// don't band. Its references are now the store's own, like the other designs.
 //
 // After an intentional design change, update the references with:
 //   UPDATE_GOLDEN=1 npx playwright test golden --project=desktop
-// (subscribe-pop's demo-* references are never overwritten).
 
 import { test, expect } from '@playwright/test';
 import fs from 'node:fs';
@@ -15,7 +17,7 @@ const UPDATE = process.env.UPDATE_GOLDEN === '1';
 
 const LIGHT = { theme: 'light', accent: '#2F7CF6', name: 'Ada Lovelace' };
 export const CASES = {
-  'subscribe-pop': { times: [0.4, 0.6, 1.0, 1.5, 1.95, 2.05, 2.2, 2.6, 3.4, 3.7, 4.5, 4.75], prefix: 'demo', variants: { default: {}, alt: { ...LIGHT, button: 'modern', position: 'left', subs: '1234567' } } },
+  'subscribe-pop': { times: [0.4, 0.6, 1.0, 1.5, 1.95, 2.05, 2.2, 2.6, 3.4, 3.7, 4.5, 4.75], variants: { default: {}, alt: { ...LIGHT, button: 'modern', position: 'left', subs: '1234567' } } },
   'like-bell': { times: [0.5, 1.95, 2.3, 3.2, 4.5], variants: { default: {}, alt: { ...LIGHT, position: 'left' } } },
   'follow-card': { times: [0.6, 2.05, 2.3, 3.0, 4.5], variants: { default: {}, alt: { ...LIGHT, handle: 'ada' } } },
   'lower-third': { times: [0.3, 0.8, 2.4, 4.1], variants: { default: {}, alt: { ...LIGHT, picture: 'hide', title: 'Mathematician' } } },
@@ -30,9 +32,9 @@ for (const [design, c] of Object.entries(CASES)) {
   test(`${design} matches its golden frames`, async ({ page }) => {
     for (const [variant, options] of Object.entries(c.variants)) {
       for (const t of c.times) {
-        const file = path.join(dir, design, `${c.prefix ?? 'ref'}-${variant}-${t}.png`);
+        const file = path.join(dir, design, `ref-${variant}-${t}.png`);
         const url = await page.evaluate(([d, t, o]) => window.harness.frame(d, t, { options: o }), [design, t, options]);
-        if (UPDATE && !c.prefix) {
+        if (UPDATE) {
           fs.mkdirSync(path.dirname(file), { recursive: true });
           fs.writeFileSync(file, Buffer.from(url.split(',')[1], 'base64'));
           continue;

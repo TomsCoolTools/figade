@@ -21,6 +21,7 @@ export class Player {
     this.job = null;
     this.watermark = null;
     this.view = null;
+    this.shadows = true;
     this.dirty = true;
     this.last = performance.now();
     this.slowFrames = 0;
@@ -71,6 +72,10 @@ export class Player {
     this.pause();
     this.seek(Math.round(this.t * this.fps + frames) / this.fps);
   }
+  setShadows(on) {
+    this.shadows = on;
+    this.dirty = true;
+  }
   setView(view) {
     this.view = view;
     this.dirty = true;
@@ -83,7 +88,7 @@ export class Player {
   }
 
   loop(now) {
-    const dt = Math.min(0.1, (now - this.last) / 1000);
+    const dt = Math.max(0, Math.min(0.1, (now - this.last) / 1000));
     this.last = now;
     if (this.playing && this.job) {
       this.t += dt * this.speed;
@@ -101,6 +106,7 @@ export class Player {
         samples: this.samples,
         watermark: this.watermark,
         view: this.view,
+        shadows: this.shadows,
       });
       // On slow devices, trade motion-blur samples for a smooth preview.
       if (performance.now() - start > 24 && this.playing) {

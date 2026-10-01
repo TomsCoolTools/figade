@@ -49,17 +49,19 @@ async function activate(i, { restart = true } = {}) {
 }
 
 // Advance the playhead across the staircase of clips. Hovering a clip holds
-// the playhead inside it so that design keeps looping.
+// the playhead inside it so that design keeps looping. Pausing or dragging
+// the playhead stops everything where it is.
 let last = performance.now();
 function tick(now) {
-  const dt = Math.min(0.1, (now - last) / 1000);
+  // rAF's timestamp can be slightly older than performance.now(), so never go backwards.
+  const dt = Math.max(0, Math.min(0.1, (now - last) / 1000));
   last = now;
   if (player.playing) {
     const d = catalogue[active].design.duration;
     if (hovering !== null) {
       seqT = active * CLIP + (player.t % d);
     } else {
-      seqT = (seqT + dt * player.speed) % total;
+      seqT = (((seqT + dt * player.speed) % total) + total) % total;
       const i = Math.floor(seqT / CLIP);
       if (i !== active) activate(i);
       player.seek(seqT - i * CLIP);
@@ -70,10 +72,56 @@ function tick(now) {
   requestAnimationFrame(tick);
 }
 
+const playBtn = $('[data-play]');
+function setPlaying(on) {
+  if (on) player.play();
+  else player.pause();
+  last = performance.now();
+  // SVG elements have no .hidden property, so set the attribute itself.
+  $('[data-icon-play]').toggleAttribute('hidden', on);
+  $('[data-icon-pause]').toggleAttribute('hidden', !on);
+  playBtn.setAttribute('aria-label', on ? 'Pause' : 'Play');
+}
+playBtn.addEventListener('click', () => setPlaying(!player.playing));
+document.addEventListener('keydown', (e) => {
+  if (e.code !== 'Space' || e.target.closest('input, textarea, select, button, a')) return;
+  e.preventDefault();
+  setPlaying(!player.playing);
+});
+
+// Drag along the ruler or empty track space to scrub, like an editor.
+function scrubTo(clientX) {
+  const r = $('[data-ruler]').getBoundingClientRect();
+  const frac = Math.min(Math.max((clientX - r.left) / r.width, 0), 0.99999);
+  seqT = frac * total;
+  const i = Math.floor(seqT / CLIP);
+  if (i !== active) activate(i, { restart: false });
+  player.seek(seqT - i * CLIP);
+}
+for (const area of [$('[data-ruler]'), ...document.querySelectorAll('.lane')]) {
+  area.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0 || e.target.closest('.clip')) return;
+    e.preventDefault();
+    hovering = null;
+    setPlaying(false);
+    area.setPointerCapture(e.pointerId);
+    document.body.classList.add('is-scrubbing');
+    scrubTo(e.clientX);
+    const move = (ev) => scrubTo(ev.clientX);
+    const up = () => {
+      area.removeEventListener('pointermove', move);
+      document.body.classList.remove('is-scrubbing');
+    };
+    area.addEventListener('pointermove', move);
+    area.addEventListener('pointerup', up, { once: true });
+    area.addEventListener('pointercancel', up, { once: true });
+  });
+}
+
 for (const c of clips) {
   const i = Number(c.dataset.clip);
   c.addEventListener('mouseenter', () => {
-    if (coarse.matches) return;
+    if (coarse.matches || !player.playing) return;
     hovering = i;
     seqT = i * CLIP;
     activate(i);
@@ -82,6 +130,7 @@ for (const c of clips) {
     hovering = null;
   });
   c.addEventListener('focus', () => {
+    if (!player.playing) return;
     seqT = i * CLIP;
     activate(i);
   });
@@ -121,4 +170,5 @@ for (const b of document.querySelectorAll('[data-buy]')) {
 await state.loadSavedAvatar();
 if (state.hasAvatar()) avatarLabel.textContent = 'Change picture';
 await activate(0);
+setPlaying(player.playing);
 requestAnimationFrame(tick);

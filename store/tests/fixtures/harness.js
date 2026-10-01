@@ -29,7 +29,7 @@ window.harness = {
     const options = { ...defaultsOf(design), ...(opts.options || {}) };
     const job = await prepareDesign(design, options, opts.layout);
     const c = new OffscreenCanvas(job.frame.w, job.frame.h);
-    new Renderer(c.width, c.height).render(c.getContext('2d'), t, { ...job, fps: 60, motionBlur: opts.motionBlur ?? true, watermark: opts.watermark ?? null });
+    new Renderer(c.width, c.height).render(c.getContext('2d'), t, { ...job, fps: 60, motionBlur: opts.motionBlur ?? true, watermark: opts.watermark ?? null, shadows: opts.shadows ?? true });
     const blob = await c.convertToBlob({ type: 'image/png' });
     return 'data:image/png;base64,' + (await toB64(blob));
   },

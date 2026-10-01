@@ -12,7 +12,6 @@ const T = {
   avatar: 0.48,
   name: 0.56,
   title: 0.68,
-  line: 0.8,
   titleOut: 3.86,
   nameOut: 3.94,
   avatarOut: 4.0,
@@ -25,7 +24,7 @@ const S = { x: 120, bottom: 132, h: 136, bar: 10, pad: 24, avatar: 88, gap: 26, 
 const NAME_FONT = font(500, 50);
 const TITLE_FONT = font(400, 28);
 
-// A line of text that rises out of a mask on the way in and up into it on the way out.
+// A line of text that rises out of a mask on the way in and sinks back on the way out.
 function maskedLine(ctx, t, { inAt, outAt, text, fnt, colour, x, baseline, rise }) {
   const pin = tween(t, inAt, 0.7, ease.outExpo);
   const pout = tween(t, outAt, 0.28, ease.inCubic);
@@ -38,7 +37,9 @@ function maskedLine(ctx, t, { inAt, outAt, text, fnt, colour, x, baseline, rise 
   ctx.font = fnt;
   ctx.fillStyle = colour;
   ctx.textBaseline = 'alphabetic';
-  fillTextLeft(ctx, text, x, baseline + (1 - pin) * (rise + 14) - pout * (rise + 14));
+  const offset = (1 - pin) * (rise + 14);
+  // Leaving, it sinks back down into its own mask (rising would cross the line above).
+  fillTextLeft(ctx, text, x, baseline + (offset < 0.5 ? 0 : offset) + pout * (rise + 14));
   ctx.restore();
 }
 
@@ -96,9 +97,9 @@ export default defineDesign({
     };
   },
 
-  render(ctx, t, sc) {
+  render(ctx, t, sc, frame) {
     const { theme } = sc;
-    const barIn = spring(t - T.bar, 2.2, 0.72);
+    const barIn = spring(t - T.bar, 2.2, 0.72, S.h);
     const barOut = tween(t, T.barOut, 0.32, ease.inCubic);
     const barH = S.h * barIn * (1 - barOut);
     if (barH <= 0.5) return;
@@ -114,13 +115,15 @@ export default defineDesign({
       ctx.beginPath();
       ctx.roundRect(S.bar, 0, pw, S.h, [0, S.radius, S.radius, 0]);
       ctx.fillStyle = theme.card;
-      ctx.shadowColor = 'rgba(0,0,0,0.30)';
-      ctx.shadowBlur = 56;
-      ctx.shadowOffsetY = 20;
-      ctx.fill();
-      ctx.shadowColor = 'rgba(0,0,0,0.18)';
-      ctx.shadowBlur = 8;
-      ctx.shadowOffsetY = 2;
+      if (frame.shadows !== false) {
+        ctx.shadowColor = 'rgba(0,0,0,0.30)';
+        ctx.shadowBlur = 56;
+        ctx.shadowOffsetY = 20;
+        ctx.fill();
+        ctx.shadowColor = 'rgba(0,0,0,0.18)';
+        ctx.shadowBlur = 8;
+        ctx.shadowOffsetY = 2;
+      }
       ctx.fill();
       ctx.restore();
 
@@ -130,15 +133,8 @@ export default defineDesign({
       ctx.clip();
       ctx.translate(S.bar, 0);
 
-      // Hairline in the accent colour sweeping along the bottom edge.
-      const lp = tween(t, T.line, 0.9, ease.outExpo) * (1 - tween(t, T.titleOut, 0.4, ease.inCubic));
-      if (lp > 0) {
-        ctx.fillStyle = sc.accent;
-        ctx.fillRect(0, S.h - 4, sc.plateW * lp, 4);
-      }
-
       if (sc.showAvatar) {
-        const ap = spring(t - T.avatar, 2.1, 0.55) * (1 - tween(t, T.avatarOut, 0.25, ease.inCubic));
+        const ap = spring(t - T.avatar, 2.1, 0.55, S.avatar / 2) * (1 - tween(t, T.avatarOut, 0.25, ease.inCubic));
         if (ap > 0) {
           const r = S.avatar / 2;
           ctx.save();

@@ -59,20 +59,20 @@ export async function prepareDesign(design, options, layout = 'landscape') {
 
 /**
  * opts: { design, options, format, fps, layout, scale, sound, watermark,
- *         motionBlur, baseName, onProgress, signal }
+ *         motionBlur, shadows, baseName, onProgress, signal }
  * Returns [{ name, blob }] — usually one file; MP4 with sound but no AAC
  * encoder returns the MP4 plus a WAV.
  */
 export async function exportDesign(opts) {
   const { design, options, format, fps = 60, layout = 'landscape', scale = 1, sound = false, watermark = null,
-    motionBlur = true, baseName = design.id, onProgress, signal } = opts;
+    motionBlur = true, shadows = true, baseName = design.id, onProgress, signal } = opts;
   if (!FORMATS[format]) throw new Error(`Unknown format "${format}"`);
   const job = await prepareDesign(design, options, layout);
   const W = Math.round(job.frame.w * scale), H = Math.round(job.frame.h * scale);
   const frames = Math.round(design.duration * fps);
   const audio = sound ? await renderSounds(design.sounds(options), design.duration) : null;
   const name = `${baseName}-${fps}fps`;
-  const ctx = { job: { ...job, fps, motionBlur, watermark }, W, H, frames, fps, audio, name, onProgress, signal };
+  const ctx = { job: { ...job, fps, motionBlur, watermark, shadows }, W, H, frames, fps, audio, name, onProgress, signal };
   if (format === 'png') return exportPng(ctx);
   return exportVideo(ctx, format);
 }

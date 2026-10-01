@@ -18,7 +18,7 @@ export const themeOf = (name) => style.themes[name] || style.themes.dark;
 // The card's entrance and exit, shared by every card design in the pack:
 // springs up from below with a slight overshoot, then dips and drops away.
 export function cardMotion(t, inAt, outAt, cardH) {
-  const inP = spring(t - inAt, 1.45, 0.68);
+  const inP = spring(t - inAt, 1.45, 0.68, cardH + 150);
   const outP = tween(t, outAt, 0.6, ease.inBack);
   const alpha = tween(t, inAt, 0.22, ease.outCubic) * (1 - tween(t, outAt + 0.32, 0.28, ease.inCubic));
   const dy = (1 - inP) * (cardH + 150) + outP * (cardH + 180);

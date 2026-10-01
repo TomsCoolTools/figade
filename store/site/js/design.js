@@ -20,9 +20,9 @@ const { design } = item;
 const PREFS = 'export-prefs:v1';
 const prefs = (() => {
   try {
-    return { format: 'mp4', fps: 60, sound: false, ...JSON.parse(localStorage.getItem(PREFS)) };
+    return { format: 'mp4', fps: 60, sound: false, shadows: true, ...JSON.parse(localStorage.getItem(PREFS)) };
   } catch {
-    return { format: 'mp4', fps: 60, sound: false };
+    return { format: 'mp4', fps: 60, sound: false, shadows: true };
   }
 })();
 const savePrefs = () => {
@@ -51,8 +51,9 @@ const options = () => resolveOptions(design, state.getShared(), state.getOwn(des
 const refresh = () => player.show(design, options());
 
 function setPlayingUi() {
-  $('[data-icon-play]').hidden = player.playing;
-  $('[data-icon-pause]').hidden = !player.playing;
+  // SVG elements have no .hidden property, so set the attribute itself.
+  $('[data-icon-play]').toggleAttribute('hidden', player.playing);
+  $('[data-icon-pause]').toggleAttribute('hidden', !player.playing);
   $('[data-play]').setAttribute('aria-label', player.playing ? 'Pause' : 'Play');
 }
 $('[data-play]').addEventListener('click', () => {
@@ -112,6 +113,13 @@ segmented($('[data-fps]'), String(prefs.fps), (v) => {
   prefs.fps = Number(v);
   savePrefs();
 });
+segmented($('[data-shadows]'), prefs.shadows ? 'on' : 'off', (v) => {
+  prefs.shadows = v === 'on';
+  savePrefs();
+  player.setShadows(prefs.shadows);
+  updateExportUi();
+});
+player.setShadows(prefs.shadows);
 segmented($('[data-sound]'), prefs.sound ? 'on' : 'off', (v) => {
   prefs.sound = v === 'on';
   savePrefs();
@@ -129,6 +137,7 @@ function updateExportUi() {
   const f = FORMATS[prefs.format];
   $('[data-format-note]').textContent = `${f.label}. Works in ${f.note}.${soundNote()}`;
   $('[data-clean-label]').textContent = `Download clean ${f.short}`;
+  $('[data-shadow-note]').hidden = !(prefs.format === 'mp4' && prefs.shadows);
   if (!caps) return;
   for (const b of formatSeg.buttons) b.disabled = !caps[b.dataset.value];
   const missing = Object.keys(FORMATS).filter((k) => !caps[k]);
@@ -214,6 +223,7 @@ async function runExport(kind) {
       format: prefs.format,
       fps: prefs.fps,
       sound: prefs.sound,
+      shadows: prefs.shadows,
       watermark: clean ? null : config.domain,
       baseName: `${design.id}-${slug(o.name) || 'channel'}${clean ? '' : '-watermarked'}`,
       onProgress,

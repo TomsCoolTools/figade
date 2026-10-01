@@ -106,6 +106,12 @@ p { margin: 0 0 1em; max-width: 68ch; }
   border-bottom: 1px solid var(--rule);
 }
 .monitor-bar strong { color: var(--paper); font-weight: 500; }
+.monitor-title { display: inline-flex; align-items: center; gap: 10px; }
+.bar-btn {
+  display: grid; place-items: center; width: 30px; height: 26px; margin: -4px 0;
+  background: var(--well); border: 1px solid var(--rule); border-radius: 3px; color: var(--paper); cursor: pointer;
+}
+.bar-btn svg { width: 14px; height: 14px; fill: currentColor; }
 .screen { position: relative; aspect-ratio: 16 / 9; background: var(--well); }
 .screen canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
 /* Title-safe guides, as in an editor's program monitor. */
@@ -161,7 +167,7 @@ p { margin: 0 0 1em; max-width: 68ch; }
   padding: 0 0 10px; user-select: none;
 }
 .ruler {
-  position: relative; height: 32px; margin-left: var(--track-head);
+  position: relative; height: 32px; margin-left: var(--track-head); cursor: ew-resize; touch-action: none;
   border-bottom: 1px solid var(--rule);
   background-image: repeating-linear-gradient(to right, var(--rule) 0 1px, transparent 1px calc(100% / 20));
   background-size: 100% 8px; background-repeat: no-repeat; background-position: bottom;
@@ -179,7 +185,9 @@ p { margin: 0 0 1em; max-width: 68ch; }
   flex: 0 0 var(--track-head); display: grid; place-items: center;
   font-stretch: 65%; font-size: var(--s-1); color: var(--ash);
 }
-.lane { position: relative; flex: 1; border-top: 1px solid rgba(79, 77, 72, 0.5); }
+.lane { position: relative; flex: 1; border-top: 1px solid rgba(79, 77, 72, 0.5); cursor: ew-resize; touch-action: pan-y; }
+.lane .clip { cursor: pointer; }
+.is-scrubbing, .is-scrubbing * { cursor: ew-resize !important; user-select: none; }
 .clip {
   --clip: var(--caribbean);
   position: absolute; top: 6px; bottom: 6px;

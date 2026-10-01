@@ -22,7 +22,10 @@ bodyClass: page-store
   </div>
   <div class="hero-monitor">
     <figure class="monitor">
-      <figcaption class="monitor-bar"><span>Program: <strong data-active-name>{{ catalogue[0].design.name }}</strong></span><span><span data-zoom>Zoom 200%</span> <span class="tc" data-tc>00:00:00</span></span></figcaption>
+      <figcaption class="monitor-bar"><span class="monitor-title"><button class="bar-btn" type="button" data-play aria-label="Pause">
+          <svg viewBox="0 0 24 24" data-icon-pause><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+          <svg viewBox="0 0 24 24" data-icon-play hidden><path d="M8 5v14l11-7z"/></svg>
+        </button>Program: <strong data-active-name>{{ catalogue[0].design.name }}</strong></span><span><span data-zoom>Zoom 200%</span> <span class="tc" data-tc>00:00:00</span></span></figcaption>
       <div class="screen"><canvas data-monitor aria-label="Live preview of the design under the playhead" role="img"></canvas></div>
     </figure>
   </div>
@@ -32,7 +35,7 @@ bodyClass: page-store
   <h2 class="visually-hidden" id="designs-title" hidden>Designs</h2>
   <div class="timeline" style="--total: {{ total }}" data-timeline>
     <div class="timeline-body">
-    <div class="ruler" aria-hidden="true">
+    <div class="ruler" aria-hidden="true" data-ruler title="Drag to scrub">
       {% for s in range(0, total + 1, 5) %}<span style="left: {{ s / total * 100 }}%">00:{{ '0' if s < 10 }}{{ s }}</span>{% endfor %}
     </div>
     <ol class="tracks">

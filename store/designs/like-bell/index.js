@@ -46,9 +46,9 @@ function layout(sc) {
 
 function drawLike(ctx, t, sc, L) {
   const { theme } = sc;
-  const inP = spring(t - T.like, 2.0, 0.52);
+  const inP = spring(t - T.like, 2.0, 0.52, sc.likeW1);
   if (inP <= 0) return;
-  const w = lerp(sc.likeW0, sc.likeW1, spring(t - T.liked, 2.4, 0.82));
+  const w = lerp(sc.likeW0, sc.likeW1, spring(t - T.liked, 2.4, 0.82, sc.likeW1 - sc.likeW0));
   const h = S.btnH;
   const scale = lerp(0.45, 1, inP) * (1 - 0.06 * press(t, T.click1));
   const hoverP = tween(t, T.cursorArrive - 0.12, 0.2, ease.easy) * (1 - tween(t, T.cursorToBell, 0.15, ease.easy));
@@ -119,7 +119,7 @@ function drawLike(ctx, t, sc, L) {
 
 function drawBellButton(ctx, t, sc, L) {
   const { theme } = sc;
-  const inP = spring(t - T.bell, 2.3, 0.5);
+  const inP = spring(t - T.bell, 2.3, 0.5, S.bellD);
   if (inP <= 0) return;
   const scale = lerp(0.2, 1, inP) * (1 - 0.09 * press(t, T.click2));
   const hoverP = tween(t, T.cursorAtBell - 0.1, 0.18, ease.easy) * (1 - tween(t, T.cursorOut, 0.25, ease.easy));
@@ -218,7 +218,7 @@ export default defineDesign({
     return sc;
   },
 
-  render(ctx, t, sc) {
+  render(ctx, t, sc, frame) {
     const L = sc.L;
     const m = cardMotion(t, T.cardIn, T.cardOut, S.cardH);
     if (m.alpha > 0.001) {
@@ -227,9 +227,9 @@ export default defineDesign({
       ctx.translate(L.cardX + L.cardW / 2, L.cardY + S.cardH + m.dy);
       ctx.scale(m.scale, m.scale);
       ctx.translate(-L.cardW / 2, -S.cardH);
-      fx.drawCard(ctx, L.cardW, S.cardH, style.radius, { fill: sc.theme.card, border: sc.theme.border });
+      fx.drawCard(ctx, L.cardW, S.cardH, style.radius, { fill: sc.theme.card, border: sc.theme.border, shadow: frame.shadows !== false });
 
-      const p = spring(t - T.avatar, 2.1, 0.55);
+      const p = spring(t - T.avatar, 2.1, 0.55, S.avatar / 2);
       if (p > 0) {
         const r = S.avatar / 2;
         ctx.save();
