@@ -13,6 +13,9 @@ export default {
     storeId: 0,
   },
 
+  // Cloudflare Web Analytics beacon token (cookieless). Leave empty to turn it off.
+  analyticsToken: '',
+
   // A licence key can unlock this many browsers before support has to reset it.
   activationLimit: 10,
 

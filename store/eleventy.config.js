@@ -14,7 +14,7 @@ export default function (eleventyConfig) {
   eleventyConfig.addFilter('price', (n) => `<span class="cur">$</span>${Number.isInteger(n) ? n : n.toFixed(2)}`);
   eleventyConfig.addFilter('json', (v) => JSON.stringify(v));
   return {
-    dir: { input: 'site', includes: '_includes', data: '_data', output: 'dist' },
+    dir: { input: 'site', includes: '_includes', data: '_data', output: process.env.STORE_OUT || 'dist' },
     templateFormats: ['njk', 'md'],
     htmlTemplateEngine: 'njk',
   };

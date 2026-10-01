@@ -34,5 +34,6 @@
     </nav>
   </footer>
   {% if script %}<script type="module" src="/js/{{ script }}.js"></script>{% endif %}
+  {% if store.analyticsToken and not dev %}<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "{{ store.analyticsToken }}"}'></script>{% endif %}
 </body>
 </html>

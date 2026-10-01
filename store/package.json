@@ -7,14 +7,15 @@
     "build": "node scripts/build.js",
     "dev": "node scripts/dev.js",
     "keys": "node scripts/keys.js",
-    "test": "node --test worker/test/ && playwright test",
-    "test:worker": "node --test worker/test/"
+    "test": "npm run test:worker && playwright test",
+    "test:worker": "node --no-warnings --test worker/test/*.test.js"
   },
   "dependencies": {
     "mediabunny": "1.61.0"
   },
   "devDependencies": {
     "@11ty/eleventy": "3.1.6",
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "1.56.1",
     "esbuild": "0.25.12"
   }

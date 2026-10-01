@@ -11,7 +11,8 @@ import { Eleventy } from '@11ty/eleventy';
 import { devKeys } from './keys.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const out = path.join(root, 'dist');
+// STORE_OUT lets the test server build somewhere else while `npm run dev` runs.
+const out = path.resolve(root, process.env.STORE_OUT || 'dist');
 
 export async function publicKey(dev) {
   if (dev) return (await devKeys(root)).publicJwk;
@@ -47,6 +48,7 @@ export async function jsOptions({ dev = false } = {}) {
 export function eleventy({ dev = false } = {}) {
   process.env.STORE_DEV = dev ? '1' : '';
   return new Eleventy(path.join(root, 'site'), out, {
+    pathPrefix: '/',
     configPath: path.join(root, 'eleventy.config.js'),
     quietMode: true,
   });
@@ -63,5 +65,5 @@ if (import.meta.url === `file://${process.argv[1]}`) {
   await esbuild.build(await jsOptions({ dev }));
   await eleventy({ dev }).write();
   if (dev) copyHarness();
-  console.log(`Built ${dev ? 'dev' : 'production'} site into dist/`);
+  console.log(`Built ${dev ? "dev" : "production"} site into ${path.relative(root, out)}/`);
 }

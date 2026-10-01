@@ -18,7 +18,7 @@ import { jsOptions, eleventy, copyHarness } from './build.js';
 import { devKeys } from './keys.js';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
-const dist = path.join(root, 'dist');
+const dist = path.resolve(root, process.env.STORE_OUT || 'dist');
 
 const TYPES = {
   '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8',
@@ -40,11 +40,12 @@ function serveStatic(url, res) {
   return true;
 }
 
-export async function startDevServer({ port = 8787, watch = true, fresh = false, quiet = false } = {}) {
+export async function startDevServer({ port = 8787, watch = true, fresh = false, quiet = false, dataDir = '.dev' } = {}) {
   const log = quiet ? () => {} : console.log;
-  fs.mkdirSync(path.join(root, '.dev'), { recursive: true });
-  const dbFile = path.join(root, '.dev', 'db.sqlite');
-  const lsFile = path.join(root, '.dev', 'mock-ls.json');
+  const data = path.resolve(root, dataDir);
+  fs.mkdirSync(data, { recursive: true });
+  const dbFile = path.join(data, 'db.sqlite');
+  const lsFile = path.join(data, 'mock-ls.json');
   if (fresh) for (const f of [dbFile, lsFile]) fs.rmSync(f, { force: true });
 
   // Build
@@ -117,5 +118,6 @@ if (import.meta.url === `file://${process.argv[1]}`) {
     port: Number(arg('--port', 8787)),
     watch: !process.argv.includes('--no-watch'),
     fresh: process.argv.includes('--fresh'),
+    dataDir: arg('--data', '.dev'),
   });
 }

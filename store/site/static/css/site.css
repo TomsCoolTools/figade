@@ -320,8 +320,9 @@ p { margin: 0 0 1em; max-width: 68ch; }
 .restore-form { display: flex; gap: 10px; flex-wrap: wrap; align-items: end; margin: 18px 0; }
 .restore-form .field { flex: 1 1 320px; margin: 0; }
 .unlocked-list { list-style: none; padding: 0; margin: 12px 0 0; display: grid; gap: 8px; }
+.unlocked-list a span:last-child { color: var(--ash); }
 .unlocked-list a {
-  display: flex; justify-content: space-between; padding: 12px 14px; text-decoration: none;
+  display: flex; flex-wrap: wrap; justify-content: space-between; gap: 2px 16px; padding: 12px 14px; text-decoration: none;
   background: var(--deck); border-left: 4px solid var(--clip, var(--mango)); border-radius: 3px;
 }
 
@@ -361,10 +362,14 @@ p { margin: 0 0 1em; max-width: 68ch; }
     display: block; position: absolute; left: 0; bottom: 0; height: 3px; width: calc(var(--p, 0) * 100%);
     background: var(--clip);
   }
-  .clip.is-active .clip-hint { display: inline; color: var(--ash); font-weight: 400; margin-left: auto; margin-right: 10px; }
+  .clip.is-active .clip-hint {
+    display: inline; margin-left: auto; margin-right: 10px; padding: 2px 8px; border-radius: 3px;
+    background: var(--graphite); color: var(--paper); font-weight: 500; font-size: 0.875rem;
+  }
   .sequence { margin-left: 0; }
   .row { grid-template-columns: 1fr; gap: 6px; }
   .stage { position: sticky; }
+  .unlocked-list a { flex-direction: column; }
   /* Keep the sticky monitor short so the controls have room. */
   .view-row { flex-wrap: nowrap; gap: 8px; padding: 0 10px 10px; }
   .view-row > span { display: none; }

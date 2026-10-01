@@ -3,3 +3,4 @@ dist/
 .dev/
 test-results/
 playwright-report/
+.test-dist/

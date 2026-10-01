@@ -1,0 +1,22 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Render golden frames with the original demo</title>
+<!-- Serve the figade repo root, open /store/tests/fixtures/demo-goldens.html.
+     Used once to make tests/golden/subscribe-pop/demo-*.png. -->
+<script type="module">
+  import * as demo from '/subscribe-demo/js/scene.js';
+  window.renderDemo = async (t, s) => {
+    await document.fonts.load('500 36px Roboto');
+    await document.fonts.load('400 25px Roboto');
+    const c = new OffscreenCanvas(1920, 1080), ctx = c.getContext('2d');
+    const scene = demo.prepareScene(s, ctx);
+    new demo.Renderer().render(ctx, t, scene, { motionBlur: true });
+    const blob = await c.convertToBlob({ type: 'image/png' });
+    return new Uint8Array(await blob.arrayBuffer()).reduce((s, b) => s + String.fromCharCode(b), '');
+  };
+  window.ready = true;
+</script>
+<style>
+  @font-face { font-family: Roboto; font-weight: 400; src: url(/subscribe-demo/fonts/roboto-400.woff2); }
+  @font-face { font-family: Roboto; font-weight: 500; src: url(/subscribe-demo/fonts/roboto-500.woff2); }
+</style>
