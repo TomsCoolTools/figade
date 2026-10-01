@@ -5,6 +5,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
+import { pathToFileURL } from 'node:url';
 
 export async function makeKeyPair() {
   const pair = await crypto.subtle.generateKey({ name: 'ECDSA', namedCurve: 'P-256' }, true, ['sign', 'verify']);
@@ -23,7 +24,8 @@ export async function devKeys(root) {
   return keys;
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Run directly (not imported)? pathToFileURL makes this work on Windows paths too.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const { publicJwk, privateJwk } = await makeKeyPair();
   fs.writeFileSync('keys/public-key.json', JSON.stringify(publicJwk, null, 2) + '\n');
   console.log('Wrote keys/public-key.json (commit this).\n');

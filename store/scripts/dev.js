@@ -9,7 +9,7 @@ import fs from 'node:fs';
 import http from 'node:http';
 import { spawnSync } from 'node:child_process';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as esbuild from 'esbuild';
 import config from '../store.config.js';
 import { handle, SCHEMA } from '../worker/handler.js';
@@ -122,7 +122,8 @@ export async function startDevServer({ port = 8787, watch = true, fresh = false,
   };
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Run directly (not imported)? pathToFileURL makes this work on Windows paths too.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const arg = (name, d) => {
     const i = process.argv.indexOf(name);
     return i > -1 ? process.argv[i + 1] : d;

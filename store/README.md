@@ -18,10 +18,15 @@ You need [Node.js](https://nodejs.org) 22 or newer.
 
 Open http://localhost:8787 in Chrome.
 
+**On Windows:** install Node.js (the LTS download from nodejs.org), download
+the code as a ZIP from GitHub and unzip it, open the `store` folder in File
+Explorer, type `cmd` in the address bar and press Enter, then run the two
+`npm` commands above in the window that opens.
+
 The dev server runs the whole shop offline. Buying opens a **test checkout**
 (no real payment) that sends the same webhooks Lemon Squeezy sends, so you can
-go through buy → unlock → clean download. Test licence keys work on the
-"Already bought?" page too.
+go through buy → unlock → clean download. The test licence keys are listed at
+http://localhost:8787/mock-ls/keys for trying the "Already bought?" page.
 
 ## Tests
 

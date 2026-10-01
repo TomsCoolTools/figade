@@ -107,6 +107,16 @@ document.getElementById('close').onclick = () => parent.postMessage({ type: 'moc
 </script>`;
   };
 
+  // Lists the test licence keys made so far, for trying "Already bought?".
+  const keysPage = () => {
+    const rows = Object.entries(state.keys).reverse().map(([key, k]) =>
+      `<tr><td><code>${key}</code></td><td>${k.productId}</td><td>${k.status}</td><td>${k.instances.length}</td><td><a href="/restore/#key=${key}" target="_top">Use in this browser</a></td></tr>`).join('');
+    return `<!doctype html><meta charset="utf-8"><title>Test licence keys</title>
+<style>body{font:15px/1.5 system-ui,sans-serif;padding:24px;color:#1d1c1a}table{border-collapse:collapse}td,th{border:1px solid #ccc;padding:6px 10px;text-align:left}code{font-size:14px;user-select:all}</style>
+<h1>Test licence keys</h1><p>Made by the dev server's test checkout. In production these arrive in the Lemon Squeezy receipt email.</p>
+${rows ? `<table><tr><th>Key</th><th>Product</th><th>Status</th><th>Browsers used</th><th></th></tr>${rows}</table>` : '<p>No test purchases yet.</p>'}`;
+  };
+
   // Node http handler for /mock-ls/*
   async function handle(req, res, url, rawBody) {
     const send = (status, body, type = 'application/json') => {
@@ -114,6 +124,7 @@ document.getElementById('close').onclick = () => parent.postMessage({ type: 'moc
       res.end(type === 'application/json' ? JSON.stringify(body) : body);
     };
     const path = url.pathname.replace('/mock-ls', '');
+    if (path === '/keys') return send(200, keysPage(), 'text/html; charset=utf-8');
     if (path === '/checkout') return send(200, checkoutPage(url.searchParams.get('product'), url.searchParams.get('claim')), 'text/html; charset=utf-8');
     if (path === '/pay' && req.method === 'POST') {
       const { product, claim } = JSON.parse(rawBody || '{}');

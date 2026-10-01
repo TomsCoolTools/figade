@@ -5,7 +5,7 @@
 
 import fs from 'node:fs';
 import path from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import * as esbuild from 'esbuild';
 import { Eleventy } from '@11ty/eleventy';
 import { devKeys } from './keys.js';
@@ -59,7 +59,8 @@ export function copyHarness() {
   fs.copyFileSync(path.join(root, 'tests/fixtures/harness.html'), path.join(out, '__test/index.html'));
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
+// Run directly (not imported)? pathToFileURL makes this work on Windows paths too.
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   const dev = process.argv.includes('--dev');
   // --pages-only: just the HTML (used by the dev server's watcher).
   if (process.argv.includes('--pages-only')) {
