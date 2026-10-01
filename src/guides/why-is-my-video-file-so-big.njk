@@ -1,0 +1,56 @@
+---
+title: "Why is my video file so big? A plain explanation"
+description: "A video's file size comes from how much data it uses each second, times its length. Here is what drives that, with real numbers, and how to make it smaller."
+h1: "Why is my video file so big?"
+tool:
+  url: "/"
+  label: "Shrink a video to the size you need"
+---
+<p>A video's size comes down to one sum: <strong>how much data it uses each second, multiplied by how many seconds long it is.</strong> The data per second is called the bitrate. Everything else, like resolution and frame rate, matters because it changes the bitrate.</p>
+
+<h2>The sum behind every video</h2>
+<p>Bitrate is measured in megabits per second (Mbps). There are 8 bits in a byte, so a video uses its bitrate divided by 8 in megabytes every second. Over a minute, that adds up quickly:</p>
+<div class="tw">
+  <table>
+    <caption>Space used by one minute of video at different bitrates</caption>
+    <thead><tr><th scope="col">Bitrate</th><th scope="col">Each second</th><th scope="col">One minute</th></tr></thead>
+    <tbody>
+      {%- for mbps in [5, 10, 20, 50] %}
+      <tr><th scope="row">{{ mbps }} Mbps</th><td>{{ mbps / 8 }} MB</td><td>{{ mbps * 60 / 8 }} MB</td></tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+<p>So a 2 minute clip recorded at 20 Mbps is about 300 MB, far past the limit of most apps and email.</p>
+
+<h2>What pushes the bitrate up</h2>
+<ul>
+  <li><strong>Resolution.</strong> 4K has four times as many pixels as 1080p, so it needs much more data to stay sharp.</li>
+  <li><strong>Frame rate.</strong> 60 frames per second shows twice as many pictures as 30. It needs more data, though usually not quite double, because frames next to each other are similar.</li>
+  <li><strong>Movement.</strong> Fast action, shaky footage, water, crowds and confetti change a lot from frame to frame and need the most data. A steady shot of a still scene needs the least.</li>
+  <li><strong>The format.</strong> Newer formats like HEVC need noticeably less data than the older H.264 for a similar picture, which is one reason the same clip can be different sizes on different devices.</li>
+</ul>
+<p>Phones record with plenty of data to spare, so the video still looks good after editing. That is great for quality and the reason the files are so large.</p>
+
+<h2>Sound is a small part</h2>
+<p>Sound usually takes up much less room than the picture. At 128 kbps, a common setting, it uses about 1 MB per minute. Removing the sound barely changes the size of most videos.</p>
+
+<h2>How to make it smaller</h2>
+<p>Because size is bitrate times length, there are only two levers: use less data per second, or make the video shorter.</p>
+<ul>
+  <li><strong>Lower the data per second.</strong> This is what a compressor does. To keep a small file looking clean rather than blocky, it also lowers the resolution when it has to.</li>
+  <li><strong>Make it shorter.</strong> Trimming a 60 second clip to 30 seconds halves the size at the same quality, or doubles the quality at the same size.</li>
+</ul>
+<p>To give a sense of the trade-off, this is how long a widescreen video can be at 25MB before the compressor steps down to each resolution:</p>
+<div class="tw">
+  <table>
+    <caption>Longest 16:9 clip that stays at each resolution at 25MB</caption>
+    <thead><tr><th scope="col">Resolution</th><th scope="col">Up to</th></tr></thead>
+    <tbody>
+      {%- for f in 25 | fits %}
+      <tr><th scope="row">{{ f.res }}</th><td>{{ f.time }}</td></tr>
+      {%- endfor %}
+    </tbody>
+  </table>
+</div>
+<p>The <a href="/video-size-guide">size guide</a> has the same numbers for other sizes.</p>
