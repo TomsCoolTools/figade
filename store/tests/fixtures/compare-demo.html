@@ -1,0 +1,34 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Demo vs store comparison</title>
+<link rel="stylesheet" href="/store/site/static/fonts/fonts.css">
+<style>@font-face { font-family: DemoRoboto; src: url(/subscribe-demo/fonts/roboto-500.woff2); }</style>
+<script type="module">
+  import * as demo from '/subscribe-demo/js/scene.js';
+  import design from '/store/designs/subscribe-pop/index.js';
+  import { Renderer, frameFor, defaultsOf, ensureFonts } from '/store/engine/index.js';
+
+  window.compare = async (times, overrides = {}) => {
+    const o = { ...defaultsOf(design), ...overrides };
+    await ensureFonts(design.fonts(o));
+    await document.fonts.load('500 30px Roboto');
+    const a = new OffscreenCanvas(1920, 1080), actx = a.getContext('2d');
+    const b = new OffscreenCanvas(1920, 1080), bctx = b.getContext('2d');
+    const frame = frameFor('landscape');
+    const scene = design.prepare(o, bctx, frame);
+    const demoScene = demo.prepareScene({ name: o.name, subs: o.subs, theme: o.theme, button: o.button, position: o.position, accent: o.accent }, actx);
+    const dr = new demo.Renderer(), sr = new Renderer(1920, 1080);
+    const out = [];
+    for (const t of times) {
+      dr.render(actx, t, demoScene, { motionBlur: true });
+      sr.render(bctx, t, { design, scene, frame, fps: 60, motionBlur: true });
+      const A = actx.getImageData(0, 0, 1920, 1080).data, B = bctx.getImageData(0, 0, 1920, 1080).data;
+      let diff = 0, maxd = 0, nonEmpty = 0;
+      for (let i = 0; i < A.length; i++) { const d = Math.abs(A[i] - B[i]); if (d) { diff++; if (d > maxd) maxd = d; } }
+      for (let i = 3; i < A.length; i += 4) if (A[i]) nonEmpty++;
+      out.push({ t, differingValues: diff, maxDiff: maxd, visiblePixels: nonEmpty });
+    }
+    return out;
+  };
+  window.ready = true;
+</script>
