@@ -908,9 +908,26 @@ nav .brand img { display: block; flex: none; }
 .workspace-page .result video, .workspace-page .result img { display: block; width: 100%; height: auto; max-height: 280px; object-fit: contain; margin: 0; background: #000; }
 .workspace-page .result-details { margin-top: 14px; padding-top: 10px; }
 .workspace-page .result-stats { margin: 12px 0 0; gap: 10px 16px; }
-.workspace-page .supporting { margin-top: 20px; padding-top: 14px; }
-.supporting-content { max-width: 52rem; margin: 16px auto 0; }
-.supporting-content .also { margin: 0 0 16px; }
+/* Related content is visible below the tool and uses the same page width. */
+.workspace-page .supporting { margin-top: 28px; padding-top: 24px; border-top: 1px solid var(--border); }
+.supporting-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+.supporting-grid > * { min-width: 0; }
+.supporting h2, .supporting .more-h { font-size: 1.25rem; margin: 0 0 12px; }
+.supporting .also { margin: 0 0 16px; font-size: .9375rem; }
+.supporting .more { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; margin-bottom: 20px; }
+.supporting .more a, .supporting .more span { padding: 8px 10px; min-height: 44px; }
+.supporting .tw { margin: 12px 0 0; }
+.supporting li { margin-bottom: 12px; }
+@media (max-width: 1024px) {
+  .supporting-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+  .supporting-links { grid-column: 1 / -1; }
+  .supporting .more { grid-template-columns: repeat(auto-fit, minmax(8rem, 1fr)); }
+}
+@media (max-width: 640px) {
+  .supporting-grid { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .supporting-links { grid-column: auto; }
+  .workspace-page .supporting { margin-top: 24px; padding-top: 20px; }
+}
 .faq-list details { margin: 0; padding: 12px 0; }
 .faq-list p { margin: 8px 0 0; }
 @media (max-width: 760px) {
@@ -942,3 +959,5 @@ main.text { padding-top: 28px; }
   nav .brand { width: 100%; margin-top: 8px; }
   nav a.l { padding: 8px 0 12px; }
 }
+
+.guide-byline { color: var(--muted); font-size: .875rem; margin: 0 0 20px; }

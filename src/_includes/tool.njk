@@ -11,9 +11,10 @@ scripts: ["/js/file-options.js", "/js/tool-ui.js", "/js/app.js"]
 <div class="limit"><b>{{ limit.big }}</b><span>{{ limit.caption }}{% if limit.checked %}, checked {{ site.checked }}{% endif %}</span></div>
 {%- endif %}
 {% include "partials/compressor.njk" %}
-<details class="supporting"><summary>Help, size guides and questions</summary>
-<div class="supporting-content">
-<p class="also">Need to shrink a photo instead? <a href="/compress-image">Compress an image&nbsp;→</a></p>
+<section class="supporting" aria-label="Help and related tools">
+<div class="supporting-grid">
+<div class="supporting-links">
+<p class="also">Need to shrink a photo instead? <a href="/compress-image">Compress an image</a></p>
 {% include "partials/sizelinks.njk" %}
 {{ content | safe }}
 {%- if fitsTable %}
@@ -30,6 +31,8 @@ scripts: ["/js/file-options.js", "/js/tool-ui.js", "/js/app.js"]
   </table>
 </div>
 {%- endif %}
+</div>
+<section class="supporting-guide">
 {%- if facts %}
 <h2>What to know</h2>
 <ul>
@@ -38,11 +41,14 @@ scripts: ["/js/file-options.js", "/js/tool-ui.js", "/js/app.js"]
   {%- endfor %}
 </ul>
 {%- endif %}
+</section>
+<section class="supporting-questions">
 <h2>Questions</h2>
 <div class="faq-list">
   {%- for item in faq %}
   <details><summary>{{ item.q }}</summary><p>{{ item.a }}</p></details>
   {%- endfor %}
 </div>
-</div></details>
+</section>
+</div></section>
 <script type="application/ld+json">{{ { page: page, site: site, h1: h1, description: description, faq: faq } | toolSchema | safe }}</script>

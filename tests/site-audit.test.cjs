@@ -29,7 +29,7 @@ test('all page assets exist and cache version strings match served bytes',()=>{
 test('wide reference pages and reading pages use the shared site shell',()=>{
  const css=fs.readFileSync('static/css/style.css','utf8');assert.match(css,/--width: 74rem/);assert.doesNotMatch(css,/--width: 44rem/);
  for(const page of pages){const d=read(page);if(d.querySelector('.tool')){
-  assert.ok(d.querySelector('.workspace-page'),page);assert.ok(d.querySelector('.supporting'),page);assert.equal(d.querySelector('.supporting').open,false,page);
+  assert.ok(d.querySelector('.workspace-page'),page);assert.ok(d.querySelector('.supporting'),page);assert.equal(d.querySelector('.supporting').tagName,'SECTION',page);assert.ok(d.querySelector('.supporting-grid > .supporting-links'),page);assert.ok(d.querySelector('.supporting-grid > .supporting-guide'),page);assert.ok(d.querySelector('.supporting-grid > .supporting-questions .faq-list'),page);assert.ok(!d.querySelector('details.supporting'),page);
  }else assert.ok(d.querySelector('.reading-content,.reference-content'),page);}
  const guide=read('video-size-guide.html');assert.ok(guide.querySelector('.reference-content .tw[tabindex="0"]'));
  assert.equal(guide.querySelectorAll('tbody tr').length,7);assert.equal(guide.querySelectorAll('tbody td').length,28);

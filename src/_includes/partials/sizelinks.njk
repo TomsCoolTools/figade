@@ -1,5 +1,5 @@
 {# Links to the other size pages. The list lives in src/_data/sizes.json. #}
-<p class="more-h">{{ sizesHeading or "Other sizes" }}</p>
+<h2 class="more-h">{{ sizesHeading or "Other sizes" }}</h2>
 <div class="more">
   {%- for s in sizes %}
   {%- if s.key == toolKey %}

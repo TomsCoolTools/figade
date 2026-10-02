@@ -11,12 +11,15 @@ scripts: ["/js/file-options.js", "/js/tool-ui.js", "/js/image.js"]
 <div class="limit"><b>{{ limit.big }}</b><span>{{ limit.caption }}</span></div>
 {%- endif %}
 {% include "partials/imagetool.njk" %}
-<details class="supporting"><summary>Help, size guides and questions</summary>
-<div class="supporting-content">
-<p class="also">Need to shrink a video instead? <a href="/">Compress a video&nbsp;→</a></p>
+<section class="supporting" aria-label="Help and related tools">
+<div class="supporting-grid">
+<div class="supporting-links">
+<p class="also">Need to shrink a video instead? <a href="/">Compress a video</a></p>
 {%- set sizes = imageSizes %}
 {% include "partials/sizelinks.njk" %}
 {{ content | safe }}
+</div>
+<section class="supporting-guide">
 <h2>What to know</h2>
 <ul>
   {%- for f in facts %}
@@ -28,11 +31,14 @@ scripts: ["/js/file-options.js", "/js/tool-ui.js", "/js/image.js"]
   <li>Location and camera details saved in the photo are left out of the result.</li>
   <li>If a form asks for exact pixel dimensions, open “Set pixel dimensions” above. A tighter KB limit may not fit at those dimensions.</li>
 </ul>
+</section>
+<section class="supporting-questions">
 <h2>Questions</h2>
 <div class="faq-list">
   {%- for item in imageFaq %}
   <details><summary>{{ item.q }}</summary><p>{{ item.a }}</p></details>
   {%- endfor %}
 </div>
-</div></details>
+</section>
+</div></section>
 <script type="application/ld+json">{{ { page: page, site: site, h1: h1, description: description, faq: imageFaq } | toolSchema | safe }}</script>

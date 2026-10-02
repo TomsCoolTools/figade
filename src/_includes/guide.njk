@@ -5,9 +5,10 @@ textPage: true
 {# guide.njk — Layout for a guide. Each guide ends by pointing to the tool that solves the problem. #}
 <div class="{{ 'reference-content' if wideContent else 'reading-content' }}">
 <h1>{{ h1 }}</h1>
+<p class="guide-byline">By <a href="/about">Tom</a></p>
 {{ content | safe }}
 {%- if tool %}
-<p class="next"><a href="{{ tool.url }}">{{ tool.label }}&nbsp;→</a></p>
+<p class="next"><a href="{{ tool.url }}">{{ tool.label }}</a></p>
 {%- endif %}
 <p class="s">More in <a href="/guides/">Guides</a>.</p>
 </div>
@@ -18,6 +19,6 @@ textPage: true
   "description": description,
   "url": site.url + page.url | replace(".html", ""),
   "dateModified": page.date | isoDate,
-  "author": { "@type": "Person", "name": "Tom" },
+  "author": { "@type": "Person", "name": "Tom", "url": site.url + "/about" },
   "publisher": { "@type": "Organization", "name": site.name, "url": site.url + "/" }
 } | dump | replace("<", "\\u003c") | safe }}</script>

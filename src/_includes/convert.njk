@@ -8,13 +8,16 @@ scripts: ["/js/tool-ui.js", "/js/convert.js"]
 <h1>{{ h1 }}</h1>
 <p class="s">{{ intro | safe }}</p>
 {% include "partials/converttool.njk" %}
-<details class="supporting"><summary>Help, size guides and questions</summary>
-<div class="supporting-content">
-<p class="also">Need to make a video smaller instead? <a href="/">Compress a video&nbsp;→</a></p>
+<section class="supporting" aria-label="Help and related tools">
+<div class="supporting-grid">
+<div class="supporting-links">
+<p class="also">Need to make a video smaller instead? <a href="/">Compress a video</a></p>
 {%- set sizes = convertLinks %}
 {%- set sizesHeading = "Other formats" %}
 {% include "partials/sizelinks.njk" %}
 {{ content | safe }}
+</div>
+<section class="supporting-guide">
 <h2>What to know</h2>
 <ul>
   {%- for f in facts %}
@@ -26,11 +29,14 @@ scripts: ["/js/tool-ui.js", "/js/convert.js"]
   <li>It reads MOV, MKV, WebM, MP4 and MPEG-TS files. AVI and WMV are not supported.</li>
   <li>Converting can make the file bigger. To make it smaller, use the <a href="/">compressor</a> afterwards.</li>
 </ul>
+</section>
+<section class="supporting-questions">
 <h2>Questions</h2>
 <div class="faq-list">
   {%- for item in convertFaq %}
   <details><summary>{{ item.q }}</summary><p>{{ item.a }}</p></details>
   {%- endfor %}
 </div>
-</div></details>
+</section>
+</div></section>
 <script type="application/ld+json">{{ { page: page, site: site, h1: h1, description: description, faq: convertFaq } | toolSchema | safe }}</script>
