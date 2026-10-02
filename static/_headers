@@ -19,3 +19,7 @@
 
 /favicon.svg
   Cache-Control: public, max-age=86400
+
+# Tell browsers to always use https for figade.com.
+/*
+  Strict-Transport-Security: max-age=31536000

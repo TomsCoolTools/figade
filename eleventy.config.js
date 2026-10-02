@@ -44,17 +44,6 @@ module.exports = function (eleventyConfig) {
     const home = data.page.url === "/";
     const graph = [
       {
-        "@type": "WebApplication",
-        name: home ? data.site.name : data.h1,
-        url,
-        description: data.description,
-        applicationCategory: "MultimediaApplication",
-        operatingSystem: "Any",
-        browserRequirements: "A current version of Chrome, Edge or Safari",
-        isAccessibleForFree: true,
-        offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-      },
-      {
         "@type": "FAQPage",
         mainEntity: data.faq.map((f) => ({
           "@type": "Question",
