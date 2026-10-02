@@ -1,0 +1,12 @@
+---
+permalink: file-verification.json
+eleventyExcludeFromCollections: true
+---
+{
+  "algorithm": "SHA-256",
+  "purpose": "Compare these hashes with the scripts served by this build. Hashes identify file versions; they are not a privacy audit.",
+  "files": [
+    {% for file in verificationFiles %}{"url": "{{ file.url }}", "sha256": "{{ file.url | sha256 }}"}{% if not loop.last %},{% endif %}
+    {% endfor %}
+  ]
+}

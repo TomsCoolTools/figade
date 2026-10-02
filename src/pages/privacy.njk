@@ -4,15 +4,17 @@ description: "How figade handles your videos, cookies and ads. Videos are proces
 h1: "Privacy"
 ---
 <p class="s">Last updated {{ site.privacyUpdated }}</p>
-  <h2>Your videos</h2>
+  <h2>Your files</h2>
   <p>Your videos and images are processed in your browser on your own device. They are not uploaded to this site or to any server. The video encoder is loaded from this site. If that fails, it is loaded from a public code host (jsDelivr) instead, which can see that your browser requested that file.</p>
+  <p>The tools hold the selected file and result in browser memory while you use them. They do not save file contents to cookies, local storage, or a database. Download saves a copy on your device; Share sends it through the app you choose. Those are actions you control.</p>
+  <p><a href="/how-file-privacy-works">How file privacy works</a> explains how to inspect the running scripts and check network activity yourself.</p>
   <h2>Advertising</h2>
   <p>This site may show ads from Google AdSense. Third party vendors, including Google, use cookies to serve ads based on your previous visits to this site or other websites. Google's use of advertising cookies lets it and its partners serve ads based on your visits to this site and other sites on the internet.</p>
   <p>You can turn off personalised ads in <a href="https://www.google.com/settings/ads">Google's Ads Settings</a>. You can also opt out of some other vendors' use of cookies for personalised ads at <a href="https://www.aboutads.info/choices/">aboutads.info</a>. To see how Google uses information from sites that show its ads, read <a href="https://policies.google.com/technologies/partner-sites">How Google uses information from sites or apps that use our services</a>.</p>
   <p>Visitors in the European Economic Area, the UK and Switzerland are asked for consent before personalised ads are shown.</p>
   <h2>Analytics</h2>
   {%- if site.goatcounter %}
-  <p>Visits are counted with <a href="https://www.goatcounter.com/">GoatCounter</a>, which does not use cookies and does not collect personal data. It records which page was visited, the site you came from, and your browser, screen size and country.</p>
+  <p>Visits are counted with <a href="https://www.goatcounter.com/">GoatCounter</a>. It records which page was visited, the site you came from, and your browser, screen size and country. This is separate from file processing; file contents and filenames are not included in the tool's analytics events.</p>
   <p>The compressor also counts whether each compression worked or failed, so problems can be found and fixed. Nothing about the video itself, such as its name or content, is sent.</p>
   {%- else %}
   <p>The site may use basic analytics to count visits and see which pages are used. This page will name the provider if one is added.</p>

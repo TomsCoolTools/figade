@@ -1,0 +1,19 @@
+<p id="est" aria-live="polite"></p>
+<div class="tool-actions">
+  <button id="go" type="button">{{ actionLabel }}</button>
+  {% if fileKind == 'video' %}<button id="cancel" class="secondary" type="button" hidden>Cancel</button>{% endif %}
+</div>
+{% if fileKind == 'video' %}
+<div id="bar" role="progressbar" aria-label="{{ actionLabel }} progress" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><i></i></div>
+<p id="progress-text" class="progress-text" hidden></p>
+{% endif %}
+<p id="st" role="status" aria-live="polite" aria-atomic="true"></p>
+<p class="trust-note">Processed on your device. <a href="/how-file-privacy-works">How you can check</a></p>
+<details class="technical"><summary>Technical details</summary><pre id="log">Nothing yet.</pre></details>
+</div>
+<div class="result-pane">
+<p class="result-empty">Your result will appear here.<span>Preview it, then download it to your device.</span></p>
+<div id="out"></div>
+<button id="reset" class="secondary reset" type="button" hidden>Choose another {{ fileKind }}</button>
+</div>
+<noscript><p class="notice">Turn on JavaScript to use this tool. Files are processed on your device.</p></noscript>

@@ -2,10 +2,11 @@
 title: "Guides: video and image size, explained"
 description: "Short, plain guides on why video and image files are the size they are, and how to get them under a limit."
 h1: "Guides"
+wideContent: true
 permalink: "guides/index.html"
 ---
 <p class="s">Short answers to common questions about file sizes and formats.</p>
-<ul>
+<ul class="guide-index">
   {%- for g in collections.guide | byOrder %}
   <li><a href="{{ g.url | replace('.html', '') }}">{{ g.data.h1 }}</a></li>
   {%- endfor %}

@@ -3,12 +3,14 @@ layout: base.njk
 textPage: true
 ---
 {# guide.njk — Layout for a guide. Each guide ends by pointing to the tool that solves the problem. #}
+<div class="{{ 'reference-content' if wideContent else 'reading-content' }}">
 <h1>{{ h1 }}</h1>
 {{ content | safe }}
 {%- if tool %}
 <p class="next"><a href="{{ tool.url }}">{{ tool.label }}&nbsp;→</a></p>
 {%- endif %}
 <p class="s">More in <a href="/guides/">Guides</a>.</p>
+</div>
 <script type="application/ld+json">{{ {
   "@context": "https://schema.org",
   "@type": "Article",

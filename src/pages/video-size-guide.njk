@@ -2,9 +2,10 @@
 title: "How much video fits in 10MB, 20MB or 25MB"
 description: "How long a video can be at 10MB, 20MB, 25MB and more before it drops to a lower resolution. Free size guide."
 h1: "How much video fits in each file size"
+wideContent: true
 ---
 <p class="s">How long a video can be at each file size before the compressor drops to a lower resolution.</p>
-  <div class="tw">
+  <div class="tw" role="region" aria-label="Video size and resolution comparison" tabindex="0">
     <table>
       <caption>Longest clip that stays at each resolution</caption>
       <thead>
@@ -17,66 +18,26 @@ h1: "How much video fits in each file size"
         </tr>
       </thead>
       <tbody>
+        {% for mb in [8, 10, 16, 20, 25, 50, 100] %}
         <tr>
-          <th scope="row"><a href="/compress-video-to-8mb">8MB</a></th>
-          <td>14 seconds</td>
-          <td>30 seconds</td>
-          <td>65 seconds</td>
-          <td>2 minutes</td>
+          <th scope="row">{% if mb == 16 %}<a href="/compress-video-for-whatsapp">{{ mb }}MB</a>{% elif mb == 20 %}<a href="/compress-video-for-discord">{{ mb }}MB</a>{% else %}<a href="/compress-video-to-{{ mb }}mb">{{ mb }}MB</a>{% endif %}</th>
+          {% for f in mb | fits %}<td>{{ f.time }}</td>{% endfor %}
         </tr>
-        <tr>
-          <th scope="row"><a href="/compress-video-to-10mb">10MB</a></th>
-          <td>17 seconds</td>
-          <td>38 seconds</td>
-          <td>81 seconds</td>
-          <td>2.5 minutes</td>
-        </tr>
-        <tr>
-          <th scope="row">16MB</th>
-          <td>27 seconds</td>
-          <td>59 seconds</td>
-          <td>2 minutes</td>
-          <td>3.5 minutes</td>
-        </tr>
-        <tr>
-          <th scope="row">20MB</th>
-          <td>34 seconds</td>
-          <td>74 seconds</td>
-          <td>2.5 minutes</td>
-          <td>4.5 minutes</td>
-        </tr>
-        <tr>
-          <th scope="row"><a href="/compress-video-to-25mb">25MB</a></th>
-          <td>42 seconds</td>
-          <td>93 seconds</td>
-          <td>3.5 minutes</td>
-          <td>5.5 minutes</td>
-        </tr>
-        <tr>
-          <th scope="row"><a href="/compress-video-to-50mb">50MB</a></th>
-          <td>84 seconds</td>
-          <td>3 minutes</td>
-          <td>6.5 minutes</td>
-          <td>11 minutes</td>
-        </tr>
-        <tr>
-          <th scope="row"><a href="/compress-video-to-100mb">100MB</a></th>
-          <td>3 minutes</td>
-          <td>6 minutes</td>
-          <td>13 minutes</td>
-          <td>22 minutes</td>
-        </tr>
+        {% endfor %}
       </tbody>
     </table>
   </div>
   <p>Past the last column the tool keeps going at 240p until the video is too long for the size, then asks for a bigger one.</p>
+  <div class="reference-notes"><section>
   <h2>Where these numbers come from</h2>
   <p>They are worked out from the same rule the compressor uses. It splits the size you pick between sound and picture, then chooses the highest resolution that still gets enough data per pixel to look clean. The table assumes a widescreen (16:9) video with sound. Sound gets 64 kbps at 12MB and under, and 96 kbps above that.</p>
   <p>Videos filmed at 60 frames per second are brought down to 30 when the size is tight, so the numbers hold for those too. A clip with no sound track has a little more room for picture.</p>
+  </section><section>
   <h2>How to fit more into a small file</h2>
   <ul>
     <li>Trim the clip first. Cutting a 60 second video to 30 seconds doubles the data each second gets.</li>
     <li>Steady clips look better than shaky ones at the same size. Fast movement like sport, crowds or confetti needs the most data.</li>
     <li>If the resolution matters more than the length, split the video into two parts and send both.</li>
   </ul>
+  </section></div>
   <p><a href="/">Open the compressor</a></p>

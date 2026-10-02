@@ -1,9 +1,34 @@
 [
-  { "url": "/compress-image", "label": "Images" },
-  { "url": "/convert-video-to-mp4", "label": "Convert" },
-  { "url": "/video-size-guide", "label": "Size guide" },
-  { "url": "/guides/", "label": "Guides" },
-  { "url": "/about", "label": "About" },
-  { "url": "/contact", "label": "Contact" },
-  { "url": "/privacy", "label": "Privacy" }
+  {
+    "url": "/compress-image",
+    "label": "Images"
+  },
+  {
+    "url": "/convert-video-to-mp4",
+    "label": "Convert"
+  },
+  {
+    "url": "/video-size-guide",
+    "label": "Size guide"
+  },
+  {
+    "url": "/guides/",
+    "label": "Guides"
+  },
+  {
+    "url": "/about",
+    "label": "About"
+  },
+  {
+    "url": "/contact",
+    "label": "Contact"
+  },
+  {
+    "url": "/how-file-privacy-works",
+    "label": "How file privacy works"
+  },
+  {
+    "url": "/privacy",
+    "label": "Privacy"
+  }
 ]

@@ -3,6 +3,13 @@ const crypto = require("crypto");
 const fs = require("fs");
 
 module.exports = function (eleventyConfig) {
+  eleventyConfig.addGlobalData("localPreview", process.env.FIGADE_PREVIEW === "1");
+  eleventyConfig.addFilter("sha256", (url) => {
+    const file = url === "/js/mediabunny.mjs"
+      ? "node_modules/mediabunny/dist/bundles/mediabunny.min.mjs"
+      : "static" + url;
+    return crypto.createHash("sha256").update(fs.readFileSync(file)).digest("hex");
+  });
   // Adds a short code to a file's link that changes whenever the file changes, e.g.
   // /css/style.css?v=3f9a1c2e, so browsers fetch the new copy straight after a deploy.
   eleventyConfig.addFilter("v", (url) =>

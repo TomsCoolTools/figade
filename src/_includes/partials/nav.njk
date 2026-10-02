@@ -1,6 +1,6 @@
 {# The menu. Edit the links in src/_data/nav.json, not here. #}
-<nav>
-  <a class="brand" href="/">{{ site.name }}</a>
+<nav aria-label="Main navigation">
+  <a class="brand" href="/"><img src="{{ '/favicon.svg' | v }}" width="28" height="28" alt="" aria-hidden="true">{{ site.name }}</a>
   {%- for item in nav %}
   <a class="l" href="{{ item.url }}"{% if (page.url | replace(".html", "")) == item.url %} aria-current="page"{% endif %}>{{ item.label }}</a>
   {%- endfor %}

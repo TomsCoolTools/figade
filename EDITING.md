@@ -37,6 +37,10 @@ footer and compressor box only exist once.
 Then open http://localhost:8080 . Leave it running: when you save a file the
 page reloads by itself. Press Ctrl+C to stop.
 
+`npm start` uses local preview mode: analytics and ads are disabled, and pages
+are marked noindex. `npm run build` creates the normal production build. The
+review package also includes a ready-built preview; see `REVIEW-FIRST.md`.
+
 Live Server is no longer used. It would show you the source files, not the
 finished pages.
 
@@ -51,10 +55,16 @@ finished pages.
 | The "Other sizes" buttons | `src/_data/sizes.json` |
 | Domain, contact address, "limits checked" date | `src/_data/site.json` |
 | Turning visit counting on (your GoatCounter code) | `goatcounter` in `src/_data/site.json` |
+| Shared page widths, article reading measure and responsive layouts | `static/css/style.css`, `src/_includes/text.njk`, `src/_includes/guide.njk` |
+| Size-guide table values | `fits` filter in `eleventy.config.js` (shared with tool-page tables) |
 | Colours and layout | `static/css/style.css` |
 | The video compressor itself | `static/js/app.js` |
 | The image compressor itself | `static/js/image.js` |
 | The MP4 converter itself | `static/js/convert.js` |
+| File summaries, result presentation, progress and shared tool controls | `static/js/tool-ui.js` |
+| Trim times, image dimensions and crop geometry | `static/js/file-options.js` |
+| File privacy and served-script verification | `src/pages/how-file-privacy-works.njk`, `src/file-verification.njk`, `src/_data/verificationFiles.json` |
+| The file picker and shared status area | `src/_includes/partials/filepicker.njk`, `toolstatus.njk` |
 | Guides (one file per guide; the Guides page lists them automatically) | `src/guides/` |
 | MP4 converter pages, their format buttons and questions | `src/convert/`, `src/_data/convertLinks.json`, `src/_data/convertFaq.json` |
 | Image pages, their "Other sizes" buttons and questions | `src/image/`, `src/_data/imageSizes.json`, `src/_data/imageFaq.json` |

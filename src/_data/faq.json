@@ -5,7 +5,7 @@
   },
   {
     "q": "How long does it take?",
-    "a": "Usually only seconds. There is no upload or download wait because your device does the work, and most phones and computers have video encoding built in. A long clip on an older phone can take longer."
+    "a": "Processing time depends on the video, your device, and whether the tool needs another attempt to fit your chosen size. Short clips can be quick; long or high-resolution videos take longer. There is no upload wait."
   },
   {
     "q": "Why did my video come out at a lower resolution?",

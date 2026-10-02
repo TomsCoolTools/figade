@@ -1,0 +1,26 @@
+[
+  {
+    "url": "/js/app.js",
+    "label": "Video compression and trimming"
+  },
+  {
+    "url": "/js/image.js",
+    "label": "Image compression and resizing"
+  },
+  {
+    "url": "/js/convert.js",
+    "label": "MP4 conversion"
+  },
+  {
+    "url": "/js/tool-ui.js",
+    "label": "File selection, preview, download and share"
+  },
+  {
+    "url": "/js/file-options.js",
+    "label": "Trim validation and image sizing"
+  },
+  {
+    "url": "/js/mediabunny.mjs",
+    "label": "Bundled video library"
+  }
+]

@@ -1,0 +1,40 @@
+---
+title: "How file privacy works: check it yourself"
+description: "How figade processes files on your device, what network requests are used for, and how to inspect the code yourself."
+h1: "Your file stays on your device"
+---
+<p class="s">The tools work with a file in your browser. There is no upload step and no media file kept on figade's servers.</p>
+<h2>What happens to your file</h2>
+<ol class="privacy-steps">
+  <li><strong>You choose a file.</strong> Your browser gives the tool access to that selected file.</li>
+  <li><strong>Your device does the work.</strong> Video uses your browser's media features and the bundled Mediabunny library. Images use your browser's image and canvas features.</li>
+  <li><strong>The result is created locally.</strong> The preview and download use a temporary browser object URL. That URL points to data on your device, not a file hosted by figade.</li>
+  <li><strong>You decide where it goes.</strong> Download saves it to your device. Share passes it to the app you choose.</li>
+</ol>
+<p>Selected files and results are held in memory while the page needs them. The tools do not write their contents to cookies, local storage, or a database. Choosing another file or resetting the tool releases the previous result. Closing the page ends its session; exact memory reclamation is managed by your browser.</p>
+<h2>The site still makes network requests</h2>
+<p>Your browser downloads the page, styles, font and tool code. The hosting provider receives those normal website requests. The video library normally comes from figade; if that download fails, a public code host called jsDelivr is a fallback. It receives a request for library code, not your selected video.</p>
+{% if site.goatcounter %}
+<p>GoatCounter counts visits and tool outcomes such as success, failure or cancellation. The tool sends event names, not filenames, file contents, dimensions, target sizes or trim times. Page analytics are separate from media processing.</p>
+{% endif %}
+<p>If advertising is enabled, advertising services can make their own requests. Those requests are not needed to process a file. The <a href="/privacy">privacy page</a> explains analytics and advertising.</p>
+<h2>Check it in your browser</h2>
+<p>Use a small test file and open your browser's developer tools:</p>
+<ol>
+  <li>Open the <strong>Network</strong> panel, then clear its request list.</li>
+  <li>Choose your file and run the tool. You may see requests for library code or analytics.</li>
+  <li>Inspect the request URLs and payloads. File processing should not send your media bytes or filename in a request.</li>
+  <li>Inspect the scripts linked below. Trace the selected file into browser processing, and the result into a local preview or download.</li>
+</ol>
+<p>This checks what your browser did in that session. Public code makes inspection possible; it is not an independent privacy audit.</p>
+<h2>Inspect the scripts this site serves</h2>
+<p>These links open the actual processing scripts on this site. The SHA-256 hashes identify the files included in this build, so you can compare versions. A matching hash identifies identical bytes; it does not establish that the code is safe.</p>
+<ul class="source-list">
+  {% for file in verificationFiles %}
+  <li><a href="{{ file.url }}?sha256={{ file.url | sha256 }}">{{ file.label }}</a><code>{{ file.url | sha256 }}</code></li>
+  {% endfor %}
+</ul>
+<p>The same hashes are available as <a href="/file-verification.json">a JSON file</a>. The readable project source is on <a href="https://github.com/TomsCoolTools/figade">GitHub</a>. Compare the version you are inspecting: repository updates and live deployments may happen at different times.</p>
+<h2>Why the code is public</h2>
+<p>Tom publishes the code so people can inspect how figade handles their files. The figade code is copyrighted and is not released under an open-source licence; publishing it for transparency does not offer general permission to reuse or redistribute it. See the <a href="https://github.com/TomsCoolTools/figade/blob/main/LICENSE">repository licence</a>. Third-party components keep their own licences.</p>
+<p class="next"><a href="/">Open the video compressor</a> or <a href="/compress-image">compress an image</a>.</p>

@@ -1,21 +1,33 @@
-{# The compressor box. Do not rename the ids — js/app.js needs them. #}
-<div class="tool">
-  <label for="file">Video <span class="hint">or drop one anywhere on this page</span></label>
-  <input id="file" type="file" accept="video/*">
-  <label for="mb">Target size</label>
-  <div class="row">
-    {%- for mb in chips %}
-    <button class="chip{% if mb == target %} on{% endif %}" data-mb="{{ mb }}">{{ mb }}MB</button>
-    {%- endfor %}
+<div class="tool" data-tool="video">
+  <div class="tool-controls">
+  {% set fileKind = 'video' %}{% set fileArticle = 'a' %}
+  {% set fileAccept = 'video/*,.mkv,.mov,.webm,.ts,.m2ts' %}
+  {% set fileHelp = 'MP4, MOV, WebM or MKV. Support depends on your browser.' %}
+  {% include "partials/filepicker.njk" %}
+  <div class="destination">
+    <label for="destination">Destination</label>
+    <select id="destination" aria-describedby="destination-help">
+      <option value=""{% if toolKey not in ['discord', 'whatsapp', 'email'] %} selected{% endif %}>Custom size</option>
+      <option value="discord" data-target="{{ collections.all | targetOf('discord') }}"{% if toolKey == 'discord' %} selected{% endif %}>Discord</option>
+      <option value="whatsapp" data-target="{{ collections.all | targetOf('whatsapp') }}"{% if toolKey == 'whatsapp' %} selected{% endif %}>WhatsApp</option>
+      <option value="email" data-target="{{ collections.all | targetOf('email') }}"{% if toolKey == 'email' %} selected{% endif %}>Email</option>
+    </select>
+    <p id="destination-help" class="control-help">Presets set the size for you.</p>
   </div>
-  <div class="num"><input id="mb" type="number" min="1" step="0.5" value="{{ target }}"><span>MB</span></div>
-  <p id="est" aria-live="polite"></p>
-  <button id="go">Compress</button>
-  <div id="bar"><i></i></div>
-  <p id="st" aria-live="polite"></p>
-  <div id="out"></div>
-  <details>
-    <summary>Details</summary>
-    <pre id="log">Nothing yet.</pre>
+  <label for="mb">Maximum file size</label>
+  <div class="row" role="group" aria-label="Size presets">
+    {% for mb in chips %}<button type="button" class="chip{% if mb == target %} on{% endif %}" aria-pressed="{{ 'true' if mb == target else 'false' }}" data-mb="{{ mb }}">{{ mb }} MB</button>{% endfor %}
+  </div>
+  <div class="num"><input id="mb" type="number" inputmode="decimal" min="1" step="0.5" value="{{ target }}" aria-describedby="size-help"><span>MB</span></div>
+  <p class="control-help" id="size-help">Smaller limits may reduce resolution.</p>
+  <details class="options" id="trim-options">
+    <summary>Trim the video (optional)</summary>
+    <div class="field-pair">
+      <div><label for="trim-start">Start time</label><input id="trim-start" type="text" inputmode="decimal" placeholder="0:00" aria-describedby="trim-help"></div>
+      <div><label for="trim-end">End time</label><input id="trim-end" type="text" inputmode="decimal" placeholder="End of video" aria-describedby="trim-help"></div>
+    </div>
+    <p id="trim-help" class="control-help">Enter seconds or a time such as 1:30. Leave both empty to keep the whole video.</p>
+    <p id="trim-preview" class="control-help" aria-live="polite"></p>
   </details>
+  {% set actionLabel = 'Compress video' %}{% include "partials/toolstatus.njk" %}
 </div>

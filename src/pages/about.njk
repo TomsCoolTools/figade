@@ -3,7 +3,7 @@ title: "About figade: who makes it and how it works"
 description: "figade is a free video compressor that shrinks a video to the size you choose, in your browser. About the site and its limits."
 h1: "About figade"
 ---
-<p>figade is a free video compressor. It shrinks a video to a file size you choose, like 20MB for Discord or 15MB for email, and aims to land just under it. It can also shrink a photo to a size in KB, for forms that set a limit, and convert a video to MP4.</p>
+<p>figade is a small collection of free tools for getting files ready to share. Fit a video under a size limit, trim it, resize and compress a photo for a form, or turn a video into an MP4.</p>
   <h2>How it works</h2>
   <p>Your browser re-encodes the video using video features built into current versions of Chrome, Edge and Safari. The video is not uploaded anywhere, so there is no upload wait and no copy on anyone else's computer.</p>
   <p>The tool works out how much data per second the video can have from its length and the size you asked for. It then picks the highest resolution that will still look clean at that rate. If the result comes out too big, or much smaller than it needed to be, it adjusts and tries again, up to four times. The <a href="/video-size-guide">size guide</a> shows what that means in practice.</p>
@@ -11,3 +11,6 @@ h1: "About figade"
   <p>Discord, WhatsApp, Gmail and Outlook change their limits from time to time, and plenty of guides online still show old numbers. The limits on this site were last checked {{ site.checked }}. If you spot one that is out of date, email <!--email_off--><a href="mailto:hello@figade.com">hello@figade.com</a><!--/email_off-->.</p>
   <h2>Who runs it</h2>
   <p>figade is made by Tom. It started as a fun project and turned out to be a genuinely useful one, so I keep working to make it the best it can be. It is free to use and may show ads to cover its costs.</p>
+  <h2>Public code, for transparency</h2>
+  <p>The <a href="https://github.com/TomsCoolTools/figade">source code is publicly readable</a> so you can inspect how file processing works. It is published for verification; the figade code is not offered under an open-source licence. The <a href="https://github.com/TomsCoolTools/figade/blob/main/LICENSE">repository licence</a> sets out the reuse restrictions, and third-party components keep their own licences.</p>
+  <p><a href="/how-file-privacy-works">See how your file stays on your device</a>, including the scripts this site serves and how to check network activity.</p>

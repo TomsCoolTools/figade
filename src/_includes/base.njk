@@ -7,7 +7,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {%- set cpath = canonical or (page.url | replace(".html", "") | replace("/index", "/")) %}
-    <meta name="robots" content="{% if noindex %}noindex{% else %}max-image-preview:large, max-snippet:-1{% endif %}">
+    <meta name="robots" content="{% if noindex or localPreview %}noindex{% else %}max-image-preview:large, max-snippet:-1{% endif %}">
     <title>{{ title }}{% if site.name not in title %} | {{ site.name }}{% endif %}</title>
     <meta name="description" content="{{ description }}">
     {%- if not noindex %}
@@ -37,19 +37,20 @@
     {%- endif %}
     <link rel="preload" href="/fonts/figade-serif-600.woff2" as="font" type="font/woff2" crossorigin>
     <link rel="stylesheet" href="{{ '/css/style.css' | v }}">
-    {%- if site.adsenseClient %}
+    {%- if site.adsenseClient and not localPreview %}
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client={{ site.adsenseClient }}" crossorigin="anonymous"></script>
     {%- endif %}
   </head>
-  <body>
+  <body{% if workspace %} class="workspace-page"{% endif %}>
+    <a class="skip-link" href="#main">Skip to content</a>
     <header class="top">
       <div class="wrap">{% include "partials/nav.njk" %}</div>
     </header>
-    <main class="wrap{% if textPage %} text{% endif %}">
+    <main id="main" tabindex="-1" class="wrap{% if textPage %} text{% endif %}">
       {{ content | safe }}
     </main>
     {% include "partials/footer.njk" %}
-    {%- if site.goatcounter %}
+    {%- if site.goatcounter and not localPreview %}
     <script data-goatcounter="https://{{ site.goatcounter }}.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
     {%- endif %}
     {%- if scripts %}

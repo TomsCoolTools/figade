@@ -1,14 +1,9 @@
-{# The MP4 converter box. Do not rename the ids — js/convert.js needs them. #}
-<div class="tool">
-  <label for="file">Video <span class="hint">or drop one anywhere on this page</span></label>
-  <input id="file" type="file" accept="video/*,.mkv,.mov,.webm,.ts,.m2ts">
-  <p id="est" aria-live="polite"></p>
-  <button id="go">Convert to MP4</button>
-  <div id="bar"><i></i></div>
-  <p id="st" aria-live="polite"></p>
-  <div id="out"></div>
-  <details>
-    <summary>Details</summary>
-    <pre id="log">Nothing yet.</pre>
-  </details>
+<div class="tool" data-tool="convert">
+  <div class="tool-controls">
+  {% set fileKind = 'video' %}{% set fileArticle = 'a' %}
+  {% set fileAccept = 'video/*,.mkv,.mov,.webm,.ts,.m2ts' %}
+  {% set fileHelp = 'MOV, MKV, WebM, MP4 or MPEG-TS. AVI and WMV are not supported.' %}
+  {% include "partials/filepicker.njk" %}
+  <p class="control-help">The output is MP4. Converting may increase file size.</p>
+  {% set actionLabel = 'Convert to MP4' %}{% include "partials/toolstatus.njk" %}
 </div>

@@ -4,6 +4,10 @@ A free video compressor that shrinks a video to the file size you choose, such a
 20MB for Discord or 15MB for email. It runs in your browser, so your video is never
 uploaded.
 
+It also supports optional video trimming, image compression with exact pixel
+dimensions, and MP4 conversion. Figade's direction is simple: free tools for
+getting files ready to share, with file processing kept on your device.
+
 **[figade.com](https://figade.com)**
 
 ## How it works
@@ -36,6 +40,11 @@ and how to change it.
 The code is published so anyone can see how figade works and check that nothing is
 uploaded. It is not open source: all rights are reserved, and it may not be copied,
 reused or hosted elsewhere without permission. See [LICENSE](LICENSE).
+
+Publicly readable code is a transparency measure, not an independent audit.
+The site includes a “How file privacy works” page linking the served scripts,
+their SHA-256 hashes, and steps to inspect browser network activity. The licence
+does not grant public access to edit the live site.
 
 Mediabunny is used under the Mozilla Public License 2.0, and the heading font is a
 modified copy of Source Serif 4 under the SIL Open Font License

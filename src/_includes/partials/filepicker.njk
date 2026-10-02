@@ -1,0 +1,9 @@
+<div class="file-picker">
+  <input id="file" class="file-input" type="file" accept="{{ fileAccept }}" aria-describedby="file-help file-summary">
+  <label class="file-drop" for="file">
+    <span class="file-action">Choose {{ fileArticle }} {{ fileKind }}</span>
+    <span class="hint">or drop one anywhere on this page</span>
+    <span class="file-formats" id="file-help">{{ fileHelp }}</span>
+  </label>
+</div>
+<p class="file-summary" id="file-summary" aria-live="polite">No file selected.</p>

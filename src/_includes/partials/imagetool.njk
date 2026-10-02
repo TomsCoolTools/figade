@@ -1,20 +1,25 @@
-{# The image compressor box. Do not rename the ids — js/image.js needs them. #}
-<div class="tool">
-  <label for="file">Image <span class="hint">or drop one anywhere on this page</span></label>
-  <input id="file" type="file" accept="image/*,.heic,.heif">
-  <label for="kb">Target size</label>
-  <div class="row">
-    {%- for kb in chips %}
-    <button class="chip{% if kb == target %} on{% endif %}" data-kb="{{ kb }}">{{ kb }}KB</button>
-    {%- endfor %}
+<div class="tool" data-tool="image">
+  <div class="tool-controls">
+  {% set fileKind = 'image' %}{% set fileArticle = 'an' %}
+  {% set fileAccept = 'image/*,.heic,.heif' %}
+  {% set fileHelp = 'JPG, PNG or WebP. HEIC support depends on your browser.' %}
+  {% include "partials/filepicker.njk" %}
+  <label for="kb">Maximum file size</label>
+  <div class="row" role="group" aria-label="Size presets">
+    {% for kb in chips %}<button type="button" class="chip{% if kb == target %} on{% endif %}" aria-pressed="{{ 'true' if kb == target else 'false' }}" data-kb="{{ kb }}">{{ kb }} KB</button>{% endfor %}
   </div>
-  <div class="num"><input id="kb" type="number" min="5" step="1" value="{{ target }}"><span>KB</span></div>
-  <p id="est" aria-live="polite"></p>
-  <button id="go">Compress</button>
-  <p id="st" aria-live="polite"></p>
-  <div id="out"></div>
-  <details>
-    <summary>Details</summary>
-    <pre id="log">Nothing yet.</pre>
+  <div class="num"><input id="kb" type="number" inputmode="numeric" min="1" step="1" value="{{ target }}" aria-describedby="size-help"><span>KB</span></div>
+  <p class="control-help" id="size-help">Saved as JPG. Transparent areas become white; location and camera metadata are removed.</p>
+  <details class="options" id="resize-options">
+    <summary>Set pixel dimensions (optional)</summary>
+    <div class="field-pair">
+      <div><label for="image-width">Width in pixels</label><input id="image-width" type="number" inputmode="numeric" min="1" max="8192" step="1" placeholder="Original" aria-describedby="resize-help"></div>
+      <div><label for="image-height">Height in pixels</label><input id="image-height" type="number" inputmode="numeric" min="1" max="8192" step="1" placeholder="Original" aria-describedby="resize-help"></div>
+    </div>
+    <label for="image-fit">When the shape is different</label>
+    <select id="image-fit" aria-describedby="resize-help"><option value="contain">Keep the whole image, add white margins</option><option value="cover">Crop the edges to fill the size</option></select>
+    <p id="resize-help" class="control-help">Set one dimension to keep the proportions, or both for an exact size. The image is never stretched. If that size cannot fit your KB limit, we will ask you to change it.</p>
+    <p id="resize-preview" class="control-help" aria-live="polite"></p>
   </details>
+  {% set actionLabel = 'Compress image' %}{% include "partials/toolstatus.njk" %}
 </div>
